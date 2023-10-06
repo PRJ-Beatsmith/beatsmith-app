@@ -1,0 +1,19 @@
+{
+  "background_color": "#212226",
+  "description": "Eine Beschreibung deiner App/Website",
+  "display": "standalone",
+  "icons": [
+    {
+      "sizes": "48x48",
+      "src": "/favicon.ico",
+      "type": "image/x-icon"
+    }
+  ],
+  "lang": "en",
+  "name": "BeatSmith",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "short_name": "BeatSmith",
+  "start_url": "/",
+  "theme_color": "#f6f6f6"
+}

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "sourceMap": true,
+    "target": "es5"
+  },
+  "include": ["src", "public/opencv.js"]
+}

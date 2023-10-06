@@ -1,1 +1,2 @@
-# beatsmith-app
+# beatsmith
+BeatSmith is an app for music guys...
