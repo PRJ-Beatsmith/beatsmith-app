@@ -3,7 +3,7 @@ import "./index.css";
 import store from "./store";
 import { Provider } from "react-redux";
 import { I18nextProvider } from "react-i18next";
-import reportWebVitals from "./reportWebVitals";
+// import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import i18n from "./core/i18n";
 import process from "process";
@@ -21,4 +21,4 @@ root.render(
   </Provider>
 );
 
-reportWebVitals();
+// reportWebVitals();

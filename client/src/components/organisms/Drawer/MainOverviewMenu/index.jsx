@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
 const listOfRoutes = (t) => {
   return [
     {
-      path: "/about",
+      path: "/overview/about",
       displayValue: t("Overview.mainMenu.About"),
       icon: <InfoIcon />,
     },

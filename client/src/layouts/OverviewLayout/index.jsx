@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import React, { Suspense, useEffect } from "react";
+import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import Box from "@material-ui/core/Box";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -41,6 +41,10 @@ const useStyles = makeStyles(() => ({
 function OverviewLayout() {
   const classes = useStyles();
 
+  useEffect(() => {
+    console.log("location changed: ", location.pathname)
+  }, [location.pathname]);
+
   return (
     <Box className={classes.root}>
       <CssBaseline />
@@ -49,29 +53,29 @@ function OverviewLayout() {
       </Box>
       <Box className={classes.content}>
         <Suspense fallback={<CircularLoader style={{ margin: "auto" }} />}>
-          <Switch>
-            <Route
-              exact
-              path="/overview"
-              render={(props) => <AboutOverviewPage {...props} />}
-            />
-            <Route exact path="/overview/about" component={AboutOverviewPage} />
-            <Route
-              exact
-              path="/overview/benefits"
-              component={BenefitsOverviewPage}
-            />
-            <Route
-              exact
-              path="/overview/pricing"
-              component={PricingOverviewPage}
-            />
-            <Route exact path="/overview/team" component={TeamOverviewPage} />
-            <Route
-              path="/overview/*"
-              component={() => <Redirect to="/error/404" />}
-            />
-          </Switch>
+        <Switch>
+          <Route
+            exact
+            path="/overview"
+            render={(props) => <AboutOverviewPage {...props} />}
+          />
+          <Route exact path="/overview/about" component={AboutOverviewPage} />
+          <Route
+            exact
+            path="/overview/benefits">
+            <BenefitsOverviewPage />
+          </Route>
+          <Route
+            exact
+            path="/overview/pricing"
+            component={PricingOverviewPage}
+          />
+          <Route exact path="/overview/team" component={TeamOverviewPage} />
+          <Route
+            path="/overview/*"
+            component={() => <Redirect to="/error/404" />}
+          />
+        </Switch>
         </Suspense>
       </Box>
     </Box>

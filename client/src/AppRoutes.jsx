@@ -36,6 +36,7 @@ const appRoutes = (props) => {
 
   allowedRoutes = (
     <Fragment>
+      
       <Suspense fallback={<LoaderWithBackdrop style={{ margin: "auto" }} />}>
         <Switch>
           {isDevelop && (
@@ -44,10 +45,14 @@ const appRoutes = (props) => {
             </Route>
           )}
           <Route path="/error" component={ErrorPageLayout} />
-          <Route path="/auth" component={AuthLayout} />
-          <Route exact path="/overview" component={OverviewLayout} />
+          <Route path="/auth" >
+            <AuthLayout />
+          </Route>
+          <Route path="/overview">
+             <OverviewLayout />
+          </Route>
           {/* <Route path="/" component={V2PrivateRoutes} /> */}
-          <Route path="/" component={() => <Redirect to="/overview" />} />
+          <Route path="/" exact component={() => <Redirect to="/overview" />} />
         </Switch>
         {/* <Route exact path="/" render={(props) => <Login {...props} />} /> */}
       </Suspense>

@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { ColorModeContext, useMode } from "./core/theme";
 import history from "./utils/history";
 import AppRoutes from "./AppRoutes";
