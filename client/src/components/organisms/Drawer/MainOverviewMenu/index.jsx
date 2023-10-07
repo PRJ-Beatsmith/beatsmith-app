@@ -1,11 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { AppBar, Toolbar, Typography, Button } from "@mui/material";
+import { AppBar, Toolbar, Box, Button } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import StarIcon from "@mui/icons-material/Star";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import GroupIcon from "@mui/icons-material/Group";
+import SwitchThemeButton from "@/components/atoms/Switches/ThemeSwitchButton";
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -70,6 +71,9 @@ const MainOverviewMenu = () => {
             {route.displayValue}
           </Button>
         ))}
+        <Box>
+          <SwitchThemeButton />
+        </Box>
       </Toolbar>
     </AppBar>
   );

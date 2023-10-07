@@ -52,12 +52,7 @@ export default memo(function AboutOverviewPage() {
     <ThemeProvider theme={theme}>
       <Paper className={classes.fullPage} square>
         <Box>
-          <Typography>
-            Test About agööööööööööööööööööööh uohewhoooooeh ioasjdbgilahjsd
-            blfikg biuewhf lkjadg bzifhdglaifgfkajfhzg fziga
-            ilkzgaofazilzhglkizuafzgakluffgaauzgfvukagvuvzfuvzajhgvdfv
-            hugaghvjdfvjjghxdvhgjasdfvdaskfdhvdkajhsdfbvkjasdhgbfdsvghjkas,
-          </Typography>
+          <Typography>About</Typography>
         </Box>
       </Paper>
     </ThemeProvider>

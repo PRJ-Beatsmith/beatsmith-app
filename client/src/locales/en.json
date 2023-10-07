@@ -1,4 +1,10 @@
 {
+  "toast": {
+    "SwitchTheme": {
+      "success": "Successfully switched the theme.",
+      "error": "Error while trying to switch the theme."
+    }
+  },
   "error": {
     "NotFound": "This page could not be found.",
     "NotAuthorized": "You are not authorized to view this page.",

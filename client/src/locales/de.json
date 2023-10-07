@@ -1,4 +1,10 @@
 {
+  "toast": {
+    "SwitchTheme": {
+      "success": "Erfolgreich das Theme gewechselt.",
+      "error": "Fehler beim Versuch das Theme zu wechseln."
+    }
+  },
   "error": {
     "NotFound": "Diese Seite konnte nicht gefunden werden.",
     "NotAuthorized": "Sie sind nicht berechtigt diese Seite zu sehen.",
