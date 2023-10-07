@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { AppBar, Toolbar, Box, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import StarIcon from "@mui/icons-material/Star";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -10,13 +10,20 @@ import SwitchThemeButton from "@/components/atoms/Switches/ThemeSwitchButton";
 
 const useStyles = makeStyles(() => ({
   header: {
-    minWidth: "100vw",
+    height: "50px",
     width: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
     gap: "1em",
+  },
+  Toolbar: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: "40px",
   },
   button: {
     display: "flex",
@@ -58,8 +65,8 @@ const MainOverviewMenu = () => {
   const { t } = useTranslation();
 
   return (
-    <AppBar position="static" className={classes.header}>
-      <Toolbar className={classes.header}>
+    <Box position="sticky" className={classes.header}>
+      <Box className={classes.Toolbar}>
         {listOfRoutes(t).map((route, index) => (
           <Button
             color="inherit"
@@ -67,15 +74,15 @@ const MainOverviewMenu = () => {
             to={route.path}
             key={index}
             className={classes.button}>
-            {route.icon}
+            {/* {route.icon} */}
             {route.displayValue}
           </Button>
         ))}
         <Box>
           <SwitchThemeButton />
         </Box>
-      </Toolbar>
-    </AppBar>
+      </Box>
+    </Box>
   );
 };
 

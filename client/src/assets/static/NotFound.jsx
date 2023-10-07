@@ -6,13 +6,13 @@ import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles({
   root: {
-    backgroundColor: "f2f2f2",
     margin: 0,
     padding: 0,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     height: "100vh",
+    width: "100%",
   },
   svg: {
     display: "block",
