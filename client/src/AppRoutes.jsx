@@ -20,7 +20,7 @@ const StorybookRoute = () => {
     window.location.href = "http://localhost:6006/";
   }, []);
 
-  return <></>;
+  return null;
 };
 
 const isDevelop = process.env.NODE_ENV === "development";
