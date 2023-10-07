@@ -36,7 +36,6 @@ const appRoutes = (props) => {
 
   allowedRoutes = (
     <Fragment>
-      
       <Suspense fallback={<LoaderWithBackdrop style={{ margin: "auto" }} />}>
         <Switch>
           {isDevelop && (
@@ -44,12 +43,14 @@ const appRoutes = (props) => {
               <StorybookRoute />
             </Route>
           )}
-          <Route path="/error" component={ErrorPageLayout} />
-          <Route path="/auth" >
+          <Route path="/error">
+            <ErrorPageLayout />
+          </Route>
+          <Route path="/auth">
             <AuthLayout />
           </Route>
           <Route path="/overview">
-             <OverviewLayout />
+            <OverviewLayout />
           </Route>
           {/* <Route path="/" component={V2PrivateRoutes} /> */}
           <Route path="/" exact component={() => <Redirect to="/overview" />} />

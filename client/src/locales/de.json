@@ -1,4 +1,9 @@
 {
+  "error": {
+    "NotFound": "Diese Seite konnte nicht gefunden werden.",
+    "NotAuthorized": "Sie sind nicht berechtigt diese Seite zu sehen.",
+    "Forbidden": "Diese Seite können Sie nicht besuchen."
+  },
   "Overview": {
     "mainMenu": {
       "About": "Über BeatSmith",

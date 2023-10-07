@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import Box from "@material-ui/core/Box";
@@ -34,9 +34,15 @@ function ErrorPageLayout() {
       <Box className={classes.content}>
         <Suspense fallback={<CircularLoader style={{ margin: "auto" }} />}>
           <Switch>
-            <Route exact path="/error/401" component={NotAuthorizedPage} />
-            <Route exact path="/error/403" component={ForbiddenPage} />
-            <Route exact path="/error/404" component={NotFoundPage} />
+            <Route exact path="/error/401">
+              <NotAuthorizedPage />
+            </Route>
+            <Route exact path="/error/403">
+              <ForbiddenPage />
+            </Route>
+            <Route exact path="/error/404">
+              <NotFoundPage />
+            </Route>
           </Switch>
         </Suspense>
       </Box>
