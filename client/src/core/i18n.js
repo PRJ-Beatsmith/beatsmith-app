@@ -56,7 +56,7 @@ i18n
     detection,
 
     lng: savedLanguage,
-    fallbackLng: "de",
+    fallbackLng: "en",
     debug: true,
 
     interpolation: {

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { SET_THEME } from "../actions/types";
 
 const initialState = {
@@ -11,6 +10,7 @@ const themeReducer = (state = initialState, action = {}) => {
 
   switch (type) {
     case SET_THEME:
+      localStorage.setItem("theme", newTheme);
       return {
         ...state,
         theme: payload,
