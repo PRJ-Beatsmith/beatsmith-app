@@ -12,13 +12,14 @@
   },
   "Overview": {
     "mainMenu": {
-      "About": "Über BeatSmith",
-      "Benefits": "Vorteile",
+      "Home": "Startseite",
+      "About": "Über",
+      "Features": "Funktionen",
       "Pricing": "Preise",
       "Team": "Team"
     },
     "about": {
-      "Title": "Die nächste Generation der Musikproduktion",
+      "Title": "Die nächste Generation\n der Musikproduktion",
       "SignIn": "Anmelden"
     }
   }

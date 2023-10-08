@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   sec5: {},
 }));
 
-export default memo(function AboutOverviewPage() {
+export default memo(function HomeOverviewPage() {
   const classes = useStyles();
   const theme = useTheme();
   const { t } = useTranslation();

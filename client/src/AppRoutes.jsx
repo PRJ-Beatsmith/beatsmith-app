@@ -54,6 +54,7 @@ const appRoutes = (props) => {
           </Route>
           {/* <Route path="/" component={V2PrivateRoutes} /> */}
           <Route path="/" exact component={() => <Redirect to="/overview" />} />
+          <Route path="/*" component={() => <Redirect to="/error/404" />} />
         </Switch>
         {/* <Route exact path="/" render={(props) => <Login {...props} />} /> */}
       </Suspense>

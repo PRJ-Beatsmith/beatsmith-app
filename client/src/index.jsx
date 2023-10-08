@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import "./index.css";
 import store from "./store";
 import { Provider } from "react-redux";
@@ -12,13 +12,14 @@ if (process.env.NODE_ENV !== "production") {
   localStorage.setItem("debug", "beatsmith:*");
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+ReactDOM.render(
   <Provider store={store}>
     <I18nextProvider i18n={i18n}>
       <App />
     </I18nextProvider>
-  </Provider>
+  </Provider>,
+  document.getElementById("root")
 );
 
 // reportWebVitals();

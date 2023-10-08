@@ -6,14 +6,13 @@ const initialState = {
 
 const themeReducer = (state = initialState, action = {}) => {
   const { type, payload } = action;
-  const newTheme = payload || "dark";
 
   switch (type) {
     case SET_THEME:
-      localStorage.setItem("theme", newTheme);
+      const newTheme = ["dark", "light"].includes(payload) ? payload : "dark";
       return {
         ...state,
-        theme: payload,
+        theme: newTheme,
       };
     default:
       return state;

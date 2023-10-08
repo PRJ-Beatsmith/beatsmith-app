@@ -12,13 +12,14 @@
   },
   "Overview": {
     "mainMenu": {
-      "About": "About BeatSmith",
-      "Benefits": "Benefits",
+      "Home": "Home",
+      "About": "About",
+      "Features": "Features",
       "Pricing": "Pricing",
       "Team": "Team"
     },
     "about": {
-      "Title": "The Next Generation\n of Music Producement",
+      "Title": "The Next Generation \n of Music Producement",
       "SignIn": "Sign In"
     }
   }

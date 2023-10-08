@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { ThemeProvider } from "@mui/material";
-import { useMode } from "@/core/theme";
+import { useMode } from "@/theme/theming";
 
 const useStyles = makeStyles(() => ({
   heading: {

@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { ColorModeContext, useMode } from "./core/theme";
-import history from "./utils/history";
+import { ColorModeContext, useMode } from "./theme/theming";
 import AppRoutes from "./AppRoutes";
 import { CONTEXT_PATH } from "./utils/constant";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -18,7 +17,7 @@ function App() {
       <Fragment>
         <DndProvider backend={HTML5Backend}>
           <ToastContainer />
-          <Router basename={CONTEXT_PATH} history={history}>
+          <Router basename={CONTEXT_PATH}>
             <ThemeProvider theme={theme}>
               <CssBaseline />
               <div className="App" id="App">

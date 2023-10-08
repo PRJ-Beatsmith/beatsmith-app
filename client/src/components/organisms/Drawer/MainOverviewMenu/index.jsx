@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Box, Button, Typography } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
 import StarIcon from "@mui/icons-material/Star";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -38,13 +39,18 @@ const useStyles = makeStyles(() => ({
 const listOfRoutes = (t) => {
   return [
     {
+      path: "/overview",
+      displayValue: t("Overview.mainMenu.Home"),
+      icon: <HomeIcon />,
+    },
+    {
       path: "/overview/about",
       displayValue: t("Overview.mainMenu.About"),
       icon: <InfoIcon />,
     },
     {
-      path: "/overview/benefits",
-      displayValue: t("Overview.mainMenu.Benefits"),
+      path: "/overview/features",
+      displayValue: t("Overview.mainMenu.Features"),
       icon: <StarIcon />,
     },
     {

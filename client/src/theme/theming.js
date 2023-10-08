@@ -4,6 +4,17 @@ import { useDispatch } from "react-redux";
 import { setTheme } from "../actions/themeAction";
 
 const darkMode = {
+  magentaAccent: {
+    100: "#fbd9dd",
+    200: "#f6b3bc",
+    300: "#f28c9a",
+    400: "#ed6679",
+    500: "#e94057",
+    600: "#ba3346",
+    700: "#8c2634",
+    800: "#5d1a23",
+    900: "#2f0d11",
+  },
   grey: {
     100: "#fdfdfd",
     200: "#fbfbfb",
@@ -29,6 +40,17 @@ const darkMode = {
 };
 
 const lightMode = {
+  magentaAccent: {
+    100: "#fbd9dd",
+    200: "#f6b3bc",
+    300: "#f28c9a",
+    400: "#ed6679",
+    500: "#e94057",
+    600: "#ba3346",
+    700: "#8c2634",
+    800: "#5d1a23",
+    900: "#2f0d11",
+  },
   grey: {
     100: "#d3d3d4",
     200: "#a6a7a8",
@@ -104,6 +126,15 @@ export const themeSettings = (mode) => {
       h6: {
         fontFamily: ["Azonix", "sans-serif"].join(","),
         fontSize: 14,
+      },
+    },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 960,
+        lg: 1280,
+        xl: 1920,
       },
     },
   });

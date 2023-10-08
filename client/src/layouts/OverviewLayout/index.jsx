@@ -6,11 +6,13 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import CircularLoader from "../../components/shared/UI/CircularLoader";
 import MainOverviewMenu from "../../components/organisms/Drawer/MainOverviewMenu";
 
+const HomeOverviewPage = React.lazy(() => import("../../Views/Overview/Home"));
+
 const AboutOverviewPage = React.lazy(() =>
   import("../../Views/Overview/About")
 );
-const BenefitsOverviewPage = React.lazy(() =>
-  import("../../Views/Overview/Benefits")
+const FeaturesOverviewPage = React.lazy(() =>
+  import("../../Views/Overview/Features")
 );
 const PricingOverviewPage = React.lazy(() =>
   import("../../Views/Overview/Pricing")
@@ -55,18 +57,23 @@ function OverviewLayout() {
             <Route
               exact
               path="/overview"
-              render={() => <Redirect to="/overview/about" />}
+              render={() => <Redirect to="/overview/home" />}
             />
-            <Route exact path="/overview/about" component={AboutOverviewPage} />
-            <Route exact path="/overview/benefits">
-              <BenefitsOverviewPage />
+            <Route path="/overview/home">
+              <HomeOverviewPage />
             </Route>
-            <Route
-              exact
-              path="/overview/pricing"
-              component={PricingOverviewPage}
-            />
-            <Route exact path="/overview/team" component={TeamOverviewPage} />
+            <Route exact path="/overview/about">
+              <AboutOverviewPage />
+            </Route>
+            <Route exact path="/overview/features">
+              <FeaturesOverviewPage />
+            </Route>
+            <Route exact path="/overview/pricing">
+              <PricingOverviewPage />
+            </Route>
+            <Route exact path="/overview/team">
+              <TeamOverviewPage />
+            </Route>
             <Route
               path="/overview/*"
               component={() => <Redirect to="/error/404" />}
