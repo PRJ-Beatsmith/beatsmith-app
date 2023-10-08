@@ -1,12 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import StarIcon from "@mui/icons-material/Star";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import GroupIcon from "@mui/icons-material/Group";
-import SwitchThemeButton from "@/components/atoms/Switches/ThemeSwitchButton";
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -23,7 +22,8 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingLeft: "40px",
+    paddingLeft: "70px",
+    paddingTop: "45px",
   },
   button: {
     display: "flex",
@@ -75,12 +75,11 @@ const MainOverviewMenu = () => {
             key={index}
             className={classes.button}>
             {/* {route.icon} */}
-            {route.displayValue}
+            <Typography style={{ fontSize: "20px" }}>
+              {route.displayValue}
+            </Typography>
           </Button>
         ))}
-        <Box>
-          <SwitchThemeButton />
-        </Box>
       </Box>
     </Box>
   );
