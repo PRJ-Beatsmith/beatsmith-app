@@ -3,23 +3,24 @@ import "./index.css";
 import store from "./store";
 import { Provider } from "react-redux";
 import { I18nextProvider } from "react-i18next";
-// import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import i18n from "./core/i18n";
 import process from "process";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import theme from "./theme";
 // eslint-disable-next-line no-undef
 if (process.env.NODE_ENV !== "production") {
   localStorage.setItem("debug", "beatsmith:*");
 }
 
-// const root = ReactDOM.createRoot(document.getElementById("root"));
 ReactDOM.render(
   <Provider store={store}>
     <I18nextProvider i18n={i18n}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
     </I18nextProvider>
   </Provider>,
   document.getElementById("root")
 );
-
-// reportWebVitals();

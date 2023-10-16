@@ -1,12 +1,12 @@
 import { Box, IconButton } from "@mui/material";
-import { tokens, useMode } from "@/core/theme";
+// import { tokens, useMode } from "@/core/theme";
 import { LightModeOutlined, DarkModeOutlined } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
 export default function ThemeSwitchButton() {
-  const [theme, toggleColorMode] = useMode();
-  const colors = tokens(theme.palette.mode);
+  // const [theme, toggleColorMode] = useMode();
+  // const colors = tokens(theme.palette.mode);
   const { t } = useTranslation();
 
   const handleThemeChange = () => {

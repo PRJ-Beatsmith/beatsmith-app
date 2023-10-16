@@ -2,6 +2,7 @@ import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { setTheme } from "../actions/themeAction";
+import { useSelector } from "react-redux";
 
 const darkMode = {
   magentaAccent: {
@@ -97,7 +98,7 @@ export const themeSettings = (mode) => {
         light: colors.grey[100],
       },
       background: {
-        default: mode === "dark" ? colors.primary[500] : "#fcfcfc",
+        default: mode === "dark" ? colors.primary[500] : "#f6f6f6",
       },
     },
     typography: {
@@ -151,7 +152,7 @@ export const useMode = () => {
   });
 
   const dispatch = useDispatch();
-  // const stateMode = useSelector((state) => state.theme.mode);
+  const stateMode = useSelector((state) => state.theme.mode);
 
   const toggleColorMode = () => {
     setMode((prev) => {
@@ -162,7 +163,10 @@ export const useMode = () => {
     });
   };
 
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const theme = useMemo(
+    () => createTheme(themeSettings(stateMode || mode)),
+    [stateMode, mode]
+  );
 
   return [theme, toggleColorMode];
 };

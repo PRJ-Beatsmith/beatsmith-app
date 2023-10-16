@@ -1,12 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 import { memo } from "react";
-import { Box } from "@material-ui/core";
+import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
-import { useTheme } from "@mui/material/styles";
 import { RoutSwitchButton } from "@/components/atoms/Buttons/RoutSwitchButton";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@mui/material/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     minHeight: "100vh",
     width: "100%",
@@ -44,26 +44,35 @@ const useStyles = makeStyles((theme) => ({
 
 export default memo(function HomeOverviewPage() {
   const classes = useStyles();
-  const theme = useTheme();
   const { t } = useTranslation();
+  const theme = useTheme();
 
   return (
     <Box className={classes.root}>
       <Box className={classes.sec1}>
         <Box className={classes.left}>
-          <img
+          <Box
+            component="img"
             src="/img/Beatsmith-logo.png"
             alt="logo"
-            style={{
-              width:
-                window.innerWidth <= theme.breakpoints.values.md
-                  ? "40vw"
-                  : window.innerWidth <= theme.breakpoints.values.sm
-                  ? "50vw"
-                  : "30vw",
+            sx={{
+              width: "100%",
+              height: "auto",
+              [theme.breakpoints.down("mobile")]: {
+                height: "20%",
+              },
+              [theme.breakpoints.down("tablet")]: {
+                height: "50%",
+              },
+              [theme.breakpoints.down("laptop")]: {
+                height: "70%",
+              },
+              [theme.breakpoints.down("desktop")]: {
+                height: "100%",
+              },
             }}
           />
-          <h1>{t("Overview.about.Title")}</h1>
+          <Typography variant="h1">{t("Overview.about.Title")}</Typography>
           <RoutSwitchButton
             textKey="Overview.about.SignIn"
             to="/auth"
@@ -71,16 +80,35 @@ export default memo(function HomeOverviewPage() {
           />
         </Box>
         <Box className={classes.right}>
-          <img
+          <Box
+            component="img"
             src="/img/Polygons.png"
             alt="polygons"
-            style={{
-              width:
-                window.innerWidth <= theme.breakpoints.values.md
-                  ? "40vw"
-                  : window.innerWidth <= theme.breakpoints.values.sm
-                  ? "50vw"
-                  : "30vw",
+            sx={{
+              width: "100%",
+              height: "auto",
+              [theme.breakpoints.up("desktop")]: {
+                height: "100%",
+              },
+              [theme.breakpoints.down("desktop")]: {
+                height: "100%",
+              },
+              [theme.breakpoints.down("laptop")]: {
+                height: "80%",
+              },
+              [theme.breakpoints.down("tablet")]: {
+                height: "0%",
+                width: 0,
+                display: "none",
+              },
+              [theme.breakpoints.down("mobile")]: {
+                display: "none",
+                width: 0,
+                height: "0%",
+              },
+              [theme.breakpoints.down(600)]: {
+                opacity: 0,
+              },
             }}
           />
         </Box>
