@@ -28,6 +28,7 @@ const useStyles = makeStyles(() => ({
     width: "800px",
     height: "800px",
     backgroundColor: "#212226",
+    borderRadius: "2rem",
   },
 }));
 

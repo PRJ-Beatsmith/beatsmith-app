@@ -5,11 +5,10 @@ import { Provider } from "react-redux";
 import { I18nextProvider } from "react-i18next";
 import App from "./App";
 import i18n from "./core/i18n";
-import process from "process";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./theme";
 // eslint-disable-next-line no-undef
-if (process.env.NODE_ENV !== "production") {
+if (import.meta.env.NODE_ENV !== "production") {
   localStorage.setItem("debug", "beatsmith:*");
 }
 

@@ -23,7 +23,7 @@ const StorybookRoute = () => {
   return null;
 };
 
-const isDevelop = process.env.NODE_ENV === "development";
+const isDevelop = import.meta.env.NODE_ENV === "development";
 
 /**
  *

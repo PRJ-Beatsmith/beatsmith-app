@@ -8,10 +8,12 @@ import AuthTitle from "@/components/molecules/AuthTitle";
 
 const useStyles = makeStyles(() => ({
   root: {
-    // width: "800px",
-    // height: "800px",
-    // backgroundColor: "#212226",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
+  header: {},
+  content: {},
 }));
 
 export default memo(function LoginPage() {
@@ -23,7 +25,10 @@ export default memo(function LoginPage() {
     <Box
       className={classes.root}
       backgroundColor={theme.palette.background.main}>
-      <AuthTitle />
+      <Box className={classes.header}>
+        <AuthTitle />
+      </Box>
+      <Box className={classes.content}></Box>
     </Box>
   );
 });
