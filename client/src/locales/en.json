@@ -1,0 +1,40 @@
+{
+  "Layout": {
+    "Auth": {
+      "loginText": "Your Project Management Made Easy.",
+      "step1Text": "The Digital Office for Generation Z.",
+      "step2Text": "The Safe Place for all Important Data.",
+      "step3Text": "Project Management Made in Germany."
+    }
+  },
+  "Auth": {
+    "Login": {
+      "signIn": "Sign In",
+      "signInForFunction": "Please log in to use all functions of ReAlign.",
+      "yourUsername": "Your Username",
+      "yourPassword": "Your Password",
+      "rememberPassword": "Remember Password",
+      "forgotPassword": "Forgot Password?",
+      "askForRegister": "No account yet? Register here for free."
+    },
+    "Register": {
+      "Step1": {
+        "whoAreYou": "Who are you? 👋",
+        "Welcome": "Welcome to ReAlign.",
+        "letsStart": "Let's start with the basics.",
+        "yourFirstName": "Your First Name",
+        "yourLastName": "Your Last Name",
+        "yourEmail": "Your E-Mail Address",
+        "yourBirthday": "Your Birthday",
+        "yourUsername": "Your Username",
+        "proceed": "Proceed",
+        "askForLogin": "Already have an account? You can log in here.",
+        "emptyFieldsError": "Please fill in all fields.",
+        "invalidEmailError": "Please enter a valid e-mail address",
+        "under18Error": "You must be at least 18 years old."
+      },
+      "Step2": {},
+      "Step3": {}
+    }
+  }
+}
