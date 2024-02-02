@@ -9,17 +9,20 @@ jobs:
   lint:
     name: 🧹 Lint
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.12.0]
     permissions:
       contents: read
       packages: write
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
-      - name: Setup Node.js
+      - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          node-version: "18"
+          node-version: ${{ matrix.node-version }}
 
       - name: 📦 Install Dependencies
         run: cd client && yarn install
@@ -110,7 +113,7 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
 
       - name: Archive Build Directory
-        run: zip -r build.zip /client/build
+        run: zip -r build.zip ./client/build
 
       - uses: actions/create-release@v1
         id: create_release
