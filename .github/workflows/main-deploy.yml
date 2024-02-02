@@ -127,5 +127,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./client/build
-          asset_name: BeatSmith-${{ github.ref_name }}-${{ steps.date.outputs.date }}.zip
+          asset_name: BeatSmith-${{ steps.create_release.outputs.release_name }}.zip
           asset_content_type: application/zip
