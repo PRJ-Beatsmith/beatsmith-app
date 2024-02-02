@@ -1,0 +1,153 @@
+name: BeatSmith App | Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: 🧪 Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: 📦 Install Dependencies
+        run: cd client && yarn install
+
+      - name: Run Test
+        run: cd client && yarn test
+
+  lint:
+    name: 🧹 Lint
+    needs: [test]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: 📦 Install Dependencies
+        run: cd client && yarn install
+
+      - name: Run Lint
+        run: cd client && yarn lint
+
+  format:
+    name: 🖌️ Format
+    needs: [test, lint]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: 📦 Install Dependencies
+        run: cd client && yarn install
+
+      - name: Run Format
+        run: cd client && yarn format
+
+  build:
+    name: 📝 Build
+    needs: [test, lint, format]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: 📦 Install Dependencies
+        run: cd client && yarn install
+
+      - name: Build
+        run: cd client && yarn build
+
+  deploy:
+    name: 🚀 Deploy
+    needs: [test, lint, format, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: 📦 Install Dependencies
+        run: cd client && yarn install
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./client/build
+
+  release:
+    name: 🏷️ Release
+    needs: [test, lint, format, build, deploy]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Get the current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H:%M:%S')"
+
+      - uses: actions/create-release@v1
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        with:
+          tag_name: release-${{ github.ref_name }}-${{ steps.date.outputs.date }}
+          release_name: Release ${{ github.ref_name }} - ${{ steps.date.outputs.date }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./client/build
+          asset_name: BeatSmith-${{ github.ref_name }}-${{ steps.date.outputs.date }}.zip
+          asset_content_type: application/zip
