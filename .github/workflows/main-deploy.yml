@@ -110,7 +110,7 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
 
       - name: Archive Build Directory
-        run: zip -r build.zip ./client/build
+        run: zip -r build.zip /client/build
 
       - uses: actions/create-release@v1
         id: create_release
