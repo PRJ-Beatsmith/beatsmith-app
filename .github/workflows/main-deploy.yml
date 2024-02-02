@@ -109,6 +109,9 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
 
+      - name: Archive Build Directory
+        run: zip -r build.zip ./client/build
+
       - uses: actions/create-release@v1
         id: create_release
         env:
@@ -126,6 +129,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./client/build
+          asset_path: ./build.zip
           asset_name: BeatSmith-${{ steps.create_release.outputs.release_name }}.zip
           asset_content_type: application/zip
