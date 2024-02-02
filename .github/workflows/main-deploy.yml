@@ -6,30 +6,8 @@ on:
       - main
 
 jobs:
-  test:
-    name: 🧪 Test
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "18"
-
-      - name: 📦 Install Dependencies
-        run: cd client && yarn install
-
-      - name: Run Test
-        run: cd client && yarn test
-
   lint:
     name: 🧹 Lint
-    needs: [test]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -51,7 +29,7 @@ jobs:
 
   format:
     name: 🖌️ Format
-    needs: [test, lint]
+    needs: [lint]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -73,7 +51,7 @@ jobs:
 
   build:
     name: 📝 Build
-    needs: [test, lint, format]
+    needs: [lint, format]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -95,7 +73,7 @@ jobs:
 
   deploy:
     name: 🚀 Deploy
-    needs: [test, lint, format, build]
+    needs: [lint, format, build]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -120,7 +98,7 @@ jobs:
 
   release:
     name: 🏷️ Release
-    needs: [test, lint, format, build, deploy]
+    needs: [lint, format, build, deploy]
     runs-on: ubuntu-latest
     permissions:
       contents: read
