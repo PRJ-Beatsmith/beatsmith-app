@@ -1,70 +1,42 @@
 {
-  "name": "beatsmith",
-  "version": "0.0.0",
-  "description": "This is the backend of BeatSmith project.",
-  "main": "server.js",
+  "name": "beatsmith-app",
+  "version": "0.0.1",
+  "description": "This is the frontend part of BeatSmith. It is a web application that allows users to create and share their own beats and music.",
   "scripts": {
     "client-install": "cd client && yarn install",
     "client-build": "cd client && yarn build",
-    "start": "node server.js",
-    "server": "nodemon server.js",
-    "client": "cd client && yarn start",
+    "start": "cd client && yarn start",
     "storybook": "cd client && yarn storybook --ci",
-    "dev": "concurrently \"yarn run server\" \"yarn run client\"",
-    "test": "yarn run fresh && yarn run mocha",
-    "fresh": "yarn run clean && yarn run seed",
-    "mocha": "nyc mocha --timeout=5000 --exit",
-    "clean": "cd pre-test && node clean.js",
-    "seed": "cd pre-test && node seed.js",
-    "fix-call-records": "cd pre-test && node fixCallRecords.js",
-    "windows-socket-debug": "set DEBUG=socket.io* && nodemon server.js",
-    "prepare": "husky install"
+    "format": "prettier --write",
+    "format-client": "cd client && yarn format",
+    "lint": "cd client && yarn lint"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PRJ-Beatsmith/beatsmith-app.git"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "express",
+    "node",
+    "mongodb",
+    "mongoose",
+    "webpack",
+    "babel",
+    "sass",
+    "mui"
+  ],
+  "author": "BeatSmith Org.",
   "license": "MIT",
-  "dependencies": {
-    "axios": "^1.5.1",
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.20.2",
-    "compression": "^1.7.4",
-    "concurrently": "^8.2.1",
-    "connect-mongo": "^5.0.0",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "cron": "^3.0.0",
-    "dotenv-safe": "^8.2.0",
-    "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "express-validator": "^7.0.1",
-    "helmet": "^7.0.0",
-    "i18n": "^0.15.1",
-    "ics": "^3.5.0",
-    "is-empty": "^1.2.0",
-    "is-port-reachable": "^4.0.0",
-    "jsonwebtoken": "^9.0.2",
-    "jwt-decode": "^3.1.2",
-    "moment": "^2.29.4",
-    "moment-timezone": "^0.5.43",
-    "mongoose": "^7.5.3",
-    "mongoose-paginate-v2": "^1.7.4",
-    "mongoose-sequence": "^5.3.1",
-    "node-fetch": "^3.3.2",
-    "passport": "^0.6.0",
-    "passport-jwt": "^4.0.1",
-    "request-ip": "^3.3.0",
-    "socket.io": "^4.7.2",
-    "uuid": "^9.0.1",
-    "validator": "^13.11.0",
-    "winston": "^3.10.0"
+  "bugs": {
+    "url": "https://github.com/PRJ-Beatsmith/beatsmith-app/issues"
   },
+  "homepage": "https://github.com/PRJ-Beatsmith/beatsmith-app#readme",
   "devDependencies": {
-    "chai": "^4.3.10",
-    "chai-http": "^4.4.0",
-    "faker": "^6.6.6",
-    "husky": "^8.0.0",
-    "mocha": "^10.2.0",
-    "nodemon": "^3.0.1",
-    "nyc": "^15.1.0"
+    "prettier": "^3.2.4"
+  },
+  "dependencies": {
+    "cron": "^3.1.6"
   }
 }

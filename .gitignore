@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# OS or Editor files
+
+.DS_Store
+
+# Yarn
+yarn-error.log
+/client/build
+/client/dist

@@ -1,9 +1,0 @@
-@font-face {
-  font-family: "Azonix";
-  src:
-    url("./Azonix.otf") format("otf"),
-    url("./Azonix.ttf") format("ttf");
-  font-display: swap;
-  font-style: normal;
-  font-weight: 300 600 900;
-}
