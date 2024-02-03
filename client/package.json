@@ -31,7 +31,7 @@
     "i18next-http-backend": "^2.4.2",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
-    "lint-staged": "^15.2.0",
+    "lint-staged": "^15.2.1",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "prop-types": "^15.8.1",
@@ -96,10 +96,12 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css,scss}": [
-      "prettier --write src/**/*.{js,jsx,json,css,scss}"
+      "prettier --write src/**/*.{js,jsx,json,css,scss}",
+      "git add"
     ],
     "src/**/*.{js,jsx}": [
-      "eslint src/**/*.{js,jsx}"
+      "eslint src/**/*.{js,jsx}",
+      "git add"
     ]
   },
   "eslintConfig": {
