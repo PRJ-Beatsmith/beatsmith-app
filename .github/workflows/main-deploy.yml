@@ -102,6 +102,9 @@ jobs:
       - name: 📦 Install Dependencies
         run: cd client && yarn install
 
+      - name: Build
+        run: cd client && yarn build
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
