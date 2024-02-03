@@ -1,14 +1,23 @@
 import { createTheme, responsiveFontSizes } from "@mui/material";
 import { red, blue, green } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
+
+const primaryColor = localStorage.getItem("primary_color");
+const secondaryColor = localStorage.getItem("secondary_color");
+
+const white = "#ffffff";
+// const black = "#000000";
 
 const theme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#f0f0ff",
+      contrastText: white,
+      main: primaryColor || "#f0f0ff",
     },
     secondary: {
-      main: "#663399",
+      contrastText: white,
+      main: secondaryColor || "#663399",
     },
     background: {
       default: "#070911",
@@ -22,9 +31,15 @@ const theme = createTheme({
     error: {
       main: red[500],
     },
+    text: {
+      primary: white,
+      secondary: "#b0b0b0",
+    },
+    icon: white,
+    divider: grey[600],
   },
   typography: {
-    fontFamily: ["Roboto", "Helvetica Neue", "Arial", "sans-serif"].join(","),
+    fontFamily: ["Roboto", "Satoshi", "Montserrat", "sans-serif"].join(","),
     fontSize: 12,
     h1: {
       fontSize: 40,
