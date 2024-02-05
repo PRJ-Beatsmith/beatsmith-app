@@ -71,10 +71,10 @@ const useStyles = makeStyles({
   },
   logo: {
     maxWidth: "100%",
-    maxHeight: "100px",
+    maxHeight: "50px",
     marginTop: "5px",
-    backgroundColor: "#070911",
-    borderRadius: "50%",
+    // backgroundColor: "#070911",
+    // borderRadius: "50%",
   },
 });
 
