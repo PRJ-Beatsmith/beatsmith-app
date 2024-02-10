@@ -1,10 +1,11 @@
 {
   "Layout": {
     "Auth": {
-      "loginText": "Deine Projektverwaltung Einfach gemacht.",
-      "step1Text": "Das Digitale Büro für Die Generation Z.",
-      "step2Text": "Der Sichere Ort für alle Wichtigen Daten.",
-      "step3Text": "Die Projektverwaltung Made in Germany."
+      "CarouselText1": "Deine Producer alle an einem Ort.",
+      "CarouselText2": "Deine Ghostwriter alle an einem Ort.",
+      "CarouselText3": "Deine Rapper alle an einem Ort.",
+      "CarouselText4": "Deine Beats alle an einem Ort.",
+      "CarouselText5": "Deine Samples alle an einem Ort."
     }
   },
   "Auth": {

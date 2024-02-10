@@ -1,10 +1,11 @@
 {
   "Layout": {
     "Auth": {
-      "loginText": "Your Project Management Made Easy.",
-      "step1Text": "The Digital Office for Generation Z.",
-      "step2Text": "The Safe Place for all Important Data.",
-      "step3Text": "Project Management Made in Germany."
+      "CarouselText1": "All your producers in one place.",
+      "CarouselText2": "All your ghostwriters in one place.",
+      "CarouselText3": "All your rappers in one place.",
+      "CarouselText4": "All your beats in one place.",
+      "CarouselText5": "All your samples in one place."
     }
   },
   "Auth": {
