@@ -11,7 +11,9 @@
   "Auth": {
     "Login": {
       "signIn": "Anmelden",
-      "signInForFunction": "Bitte melde dich an, um alle Funktionen von ReAlign nutzen zu können.",
+      "signInForFunction": "Bitte melde dich an.",
+      "Password": "Passwort",
+      "Username": "Benutzername",
       "yourUsername": "Dein Benutzername",
       "yourPassword": "Dein Passwort",
       "rememberPassword": "Passwort merken",

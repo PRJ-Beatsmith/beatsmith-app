@@ -1,33 +1,25 @@
 import React from "react";
-import { TextField } from "@mui/material";
+import { TextField, InputAdornment } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
+import EmailIcon from "@mui/icons-material/Email";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const useStyles = makeStyles({
   root: {
     flexShrink: 0,
     borderRadius: "4px",
-    border: "2px solid #EC4E49",
-    background: "#191919",
+    // border: "2px solid #EC4E49",
+    background: "#0B0D0E",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: "stretch",
     fontFamily: "Montserrat, sans-serif",
     fontSize: "16px",
     fontStyle: "normal",
     fontWeight: 400,
     lineHeight: "normal",
     color: "#FFF",
-    "&:hover .MuiOutlinedInput-notchedOutline": {
-      border: "none",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&::focus fieldset": {
-        border: "none",
-      },
-    },
-    "& .MuiInputAdornment-root .MuiSvgIcon-root": {
-      color: "#FFF",
-    },
   },
 });
 
@@ -39,6 +31,8 @@ const CustomInput = ({
   placeholder,
   fullWidth,
   style,
+  showEmailStartIcon,
+  showUserStartIcon,
   ...otherProps
 }) => {
   const classes = useStyles();
@@ -62,12 +56,20 @@ const CustomInput = ({
           "& fieldset": {
             border: "none",
           },
-        },
-        "& .MuiInputAdornment-root .MuiSvgIcon-root": {
-          color: "white", // Farbe auf Weiß setzen
+          "&.Mui-focused fieldset": {
+            border: "2px solid #EC4E49", // Roten Rand bei Fokus anzeigen
+          },
         },
       }}
       required
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            {showEmailStartIcon && <EmailIcon />}
+            {showUserStartIcon && <AccountCircleIcon />}
+          </InputAdornment>
+        ),
+      }}
     />
   );
 };

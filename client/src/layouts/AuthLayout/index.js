@@ -14,6 +14,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#232628",
   },
   Container: {
     display: "flex",
@@ -37,7 +38,7 @@ const useStyles = makeStyles({
     height: "679px",
     flexShrink: 0,
     borderRadius: "0px 12px 12px 0px",
-    background: "#12141B",
+    background: "#171A1C",
     "@media (max-width: 769px)": {
       borderRadius: "12px",
     },
@@ -59,13 +60,6 @@ const useStyles = makeStyles({
     textAlign: "left",
     margin: "146px 0 0 58px",
     width: "356px",
-  },
-  logo: {
-    maxWidth: "100%",
-    maxHeight: "100px",
-    marginTop: "5px",
-    backgroundColor: "#070911",
-    borderRadius: "50%",
   },
 });
 

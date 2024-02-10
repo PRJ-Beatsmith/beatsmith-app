@@ -30,22 +30,24 @@ const useStyles = makeStyles({
     display: "inline-flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "20px",
+    gap: "3px",
   },
   text1: {
-    fontFamily: "Ubuntu, sans-serif",
-    fontSize: "32px",
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "36px",
     fontStyle: "normal",
     fontWeight: 700,
-    lineHeight: "normal",
+    lineHeight: "133%",
   },
   text2: {
     textAlign: "center",
     fontFamily: "Montserrat, sans-serif",
-    fontSize: "20px",
+    fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 400,
-    lineHeight: "normal",
+    lineHeight: "142%",
+    color: "#636B74",
+    paddingBottom: "17px",
   },
   form: {
     display: "inline-flex",
@@ -59,7 +61,7 @@ const useStyles = makeStyles({
   label: {
     display: "flex",
     alignItems: "flex-start",
-    fontFamily: "Ubuntu, sans-serif",
+    fontFamily: "Montserrat, sans-serif",
     fontSize: "12px",
     fontStyle: "normal",
     fontWeight: 700,
@@ -86,10 +88,10 @@ const useStyles = makeStyles({
     color: "#E94057",
     textAlign: "center",
     fontFamily: "Montserrat, sans-serif",
-    fontSize: "13px",
+    fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 400,
-    lineHeight: "normal",
+    lineHeight: "150%",
     textDecoration: "none",
   },
   passwordOptions: {
@@ -99,11 +101,19 @@ const useStyles = makeStyles({
     gap: "10px",
   },
   checkbox: {
-    fontFamily: "Montserrat, sans-serif",
-    fontSize: "12px",
+    fontFamily: "Montserrat",
+    fontSize: "16px",
     fontStyle: "normal",
     fontWeight: 400,
-    lineHeight: "normal",
+    lineHeight: "100%",
+  },
+  checkboxLabel: {
+    color: "#EAEEF6",
+    fontFamily: "Montserrat",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "100%",
   },
 });
 
@@ -143,40 +153,48 @@ const Login = () => {
         <Typography variant="h1" className={classes.text1}>
           {t("Auth.Login.signIn")}
         </Typography>
-        <Typography variant="h4" className={classes.text2}>
+        <Typography variant="h6" className={classes.text2}>
           {t("Auth.Login.signInForFunction")}
         </Typography>
       </Box>
       <Box className={classes.form}>
         <FormGroup className={classes.formGroup}>
-          <label htmlFor="email" className={classes.label}>
-            {t("Auth.Login.yourUsername")}
+          <label htmlFor="text" className={classes.label}>
+            {t("Auth.Login.Username")}
           </label>
           <CustomInput
             fullWidth
             style={{ width: "400px", height: "50px" }}
-            type="email"
+            type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="re.align@user.com"
+            placeholder={t("Auth.Login.yourUsername")}
+            showUserStartIcon={true}
           />
         </FormGroup>
         <FormGroup className={classes.formGroup}>
           <label htmlFor="password" className={classes.label}>
-            {t("Auth.Login.yourPassword")}
+            {t("Auth.Login.Password")}
           </label>
           <PasswordInput
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder={t("Auth.Login.yourPassword")}
             showEyeIcon={true}
+            showPasswordStartIcon={true}
           />
           <Box className={classes.passwordOptions}>
             <FormControlLabel
               control={<Checkbox defaultChecked />}
-              label={t("Auth.Login.rememberPassword")}
+              label={
+                <Typography variant="body2" className={classes.checkboxLabel}>
+                  {t("Auth.Login.rememberPassword")}
+                </Typography>
+              }
               className={classes.checkbox}
+              variant="body2"
             />
-            <Typography variant="body1" className={classes.text3}>
+            <Typography variant="body2" className={classes.text3}>
               <Link to="/auth/forgot-password" className={classes.text3}>
                 {t("Auth.Login.forgotPassword")}
               </Link>
@@ -197,7 +215,7 @@ const Login = () => {
         >
           {t("Auth.Login.signIn")}
         </Button>
-        <Typography variant="body1" className={classes.text3}>
+        <Typography variant="body2" className={classes.text3}>
           <Link to="/auth/register/step1" className={classes.text3}>
             {t("Auth.Login.askForRegister")}
           </Link>

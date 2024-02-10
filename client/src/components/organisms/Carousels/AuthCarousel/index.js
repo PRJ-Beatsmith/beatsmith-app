@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     transform: "translateY(-50%)",
     flexShrink: 0,
     color: "#F6F6F6",
-    fontFamily: "Satoshi",
+    fontFamily: "Montserrat",
     fontSize: "42px",
     fontStyle: "normal",
     fontWeight: 700,
@@ -148,7 +148,7 @@ export const AuthCarousel = () => {
 
       <img src={BeatSmithLogo} alt="BeatSmith Logo" className={classes.logo} />
 
-      <Typography variant="h4" className={classes.title}>
+      <Typography variant="body2" className={classes.title}>
         {carouselItems[activeStep].title}
       </Typography>
 

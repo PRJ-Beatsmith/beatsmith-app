@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CasinoIcon from "@mui/icons-material/Casino";
+import HttpsIcon from "@mui/icons-material/Https";
 
 const useStyles = makeStyles({
   root: {
@@ -11,8 +12,7 @@ const useStyles = makeStyles({
     height: "50px",
     flexShrink: 0,
     borderRadius: "4px",
-    border: "2px solid #EC4E49",
-    background: "#191919",
+    background: "#0B0D0E",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -22,18 +22,17 @@ const useStyles = makeStyles({
     fontWeight: 400,
     lineHeight: "normal",
     color: "#FFF",
-    "&:hover .MuiOutlinedInput-notchedOutline": {
-      border: "none",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&::focus fieldset": {
-        border: "none",
-      },
-    },
   },
 });
 
-const PasswordInput = ({ showCubeIcon, showEyeIcon, value, onChange }) => {
+const PasswordInput = ({
+  showCubeIcon,
+  showEyeIcon,
+  value,
+  placeholder,
+  onChange,
+  showPasswordStartIcon,
+}) => {
   const classes = useStyles();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -78,7 +77,7 @@ const PasswordInput = ({ showCubeIcon, showEyeIcon, value, onChange }) => {
       type={showPassword ? "text" : "password"}
       fullWidth
       required
-      placeholder="*******************"
+      placeholder={placeholder}
       name="password"
       value={value}
       onChange={onChange}
@@ -91,9 +90,17 @@ const PasswordInput = ({ showCubeIcon, showEyeIcon, value, onChange }) => {
           "& fieldset": {
             border: "none",
           },
+          "&.Mui-focused fieldset": {
+            border: "2px solid #EC4E49", // Roten Rand bei Fokus anzeigen
+          },
         },
       }}
       InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            {showPasswordStartIcon && <HttpsIcon />}
+          </InputAdornment>
+        ),
         endAdornment: (
           <InputAdornment position="end">
             {showCubeIcon && (

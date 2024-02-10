@@ -10,8 +10,10 @@
   },
   "Auth": {
     "Login": {
-      "signIn": "Sign In",
-      "signInForFunction": "Please log in to use all functions of ReAlign.",
+      "signIn": "Login",
+      "signInForFunction": "Please login.",
+      "Password": "Password",
+      "Username": "Username",
       "yourUsername": "Your Username",
       "yourPassword": "Your Password",
       "rememberPassword": "Remember Password",
