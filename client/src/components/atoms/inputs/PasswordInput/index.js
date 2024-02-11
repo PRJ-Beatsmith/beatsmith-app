@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { InputAdornment, TextField, IconButton } from "@mui/material";
+import {
+  InputAdornment,
+  TextField,
+  IconButton,
+  LinearProgress,
+} from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -23,15 +28,21 @@ const useStyles = makeStyles({
     lineHeight: "normal",
     color: "#FFF",
   },
+  progressBar: {
+    width: "100%",
+    marginTop: "10px",
+  },
 });
 
 const PasswordInput = ({
   showCubeIcon,
   showEyeIcon,
+  showPasswordStartIcon,
+  showProgressBar,
   value,
   placeholder,
   onChange,
-  showPasswordStartIcon,
+  onStrengthChange,
 }) => {
   const classes = useStyles();
 
@@ -72,55 +83,105 @@ const PasswordInput = ({
     onChange({ target: { value: password } });
   };
 
+  const getPasswordStrength = (password) => {
+    let strength = 0;
+    if (password.length >= 10) strength += 25;
+    if (password.match(/[A-Z]/g)) strength += 25;
+    if (password.match(/[a-z]/g)) strength += 25;
+    if (password.match(/[0-9]/g) || password.match(/[!@#$%^&*()_+]/g))
+      strength += 25;
+    return strength;
+  };
+
+  const getProgressBarColor = (strength) => {
+    if (strength < 50) {
+      return "#FF0000";
+    } else if (strength < 75) {
+      return "#FF8800";
+    } else if (strength < 100) {
+      return "#FFA500";
+    } else {
+      return "#008000";
+    }
+  };
+
+  const handleChange = (event) => {
+    const { value } = event.target;
+    onChange(event);
+
+    const strength = getPasswordStrength(value);
+    if (onStrengthChange) {
+      onStrengthChange(strength);
+    }
+  };
+
   return (
-    <TextField
-      type={showPassword ? "text" : "password"}
-      fullWidth
-      required
-      placeholder={placeholder}
-      name="password"
-      value={value}
-      onChange={onChange}
-      className={classes.root}
-      sx={{
-        "&:hover .MuiOutlinedInput-notchedOutline": {
-          border: "none",
-        },
-        "& .MuiOutlinedInput-root": {
-          "& fieldset": {
+    <>
+      <TextField
+        type={showPassword ? "text" : "password"}
+        fullWidth
+        required
+        placeholder={placeholder}
+        name="password"
+        value={value}
+        onChange={handleChange}
+        className={classes.root}
+        sx={{
+          "&:hover .MuiOutlinedInput-notchedOutline": {
             border: "none",
           },
-          "&.Mui-focused fieldset": {
-            border: "2px solid #EC4E49", // Roten Rand bei Fokus anzeigen
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              border: "none",
+            },
+            "&.Mui-focused fieldset": {
+              border: "2px solid #EC4E49",
+            },
           },
-        },
-      }}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            {showPasswordStartIcon && <HttpsIcon />}
-          </InputAdornment>
-        ),
-        endAdornment: (
-          <InputAdornment position="end">
-            {showCubeIcon && (
-              <IconButton onClick={generatePassword}>
-                <CasinoIcon />
-              </IconButton>
-            )}
-            {showEyeIcon && (
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            )}
-          </InputAdornment>
-        ),
-      }}
-    />
+        }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              {showPasswordStartIcon && <HttpsIcon />}
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment position="end">
+              {showCubeIcon && (
+                <IconButton onClick={generatePassword}>
+                  <CasinoIcon />
+                </IconButton>
+              )}
+              {showEyeIcon && (
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              )}
+            </InputAdornment>
+          ),
+        }}
+      />
+      {showProgressBar && (
+        <LinearProgress
+          variant="determinate"
+          value={getPasswordStrength(value)}
+          fullWidth
+          className={classes.progressBar}
+          sx={{
+            width: "100%",
+            borderRadius: "6px",
+            marginTop: "10px",
+            "& .MuiLinearProgress-bar": {
+              backgroundColor: getProgressBarColor(getPasswordStrength(value)),
+            },
+          }}
+        />
+      )}
+    </>
   );
 };
 

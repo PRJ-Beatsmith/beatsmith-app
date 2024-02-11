@@ -5,7 +5,6 @@ import { useLoginMutation } from "../../../slices/userApiSlice";
 import { setCredentials } from "../../../slices/authSlice";
 import {
   Box,
-  Button,
   Typography,
   FormGroup,
   FormControlLabel,
@@ -17,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import CustomInput from "components/atoms/inputs/CustomInput";
 import PasswordInput from "components/atoms/inputs/PasswordInput";
+import FormButton from "components/atoms/Buttons/formButton";
 
 const useStyles = makeStyles({
   root: {
@@ -123,8 +123,9 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   const [login, { isLoading }] = useLoginMutation();
 
@@ -139,12 +140,16 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await login({ email, password }).unwrap();
+      const res = await login({ username, password }).unwrap();
       dispatch(setCredentials({ ...res }));
       navigate("/", { replace: true });
     } catch (error) {
       toast.error(error?.data?.message || error.error);
     }
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
   };
 
   return (
@@ -166,8 +171,8 @@ const Login = () => {
             fullWidth
             style={{ width: "400px", height: "50px" }}
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             placeholder={t("Auth.Login.yourUsername")}
             showUserStartIcon={true}
           />
@@ -178,10 +183,11 @@ const Login = () => {
           </label>
           <PasswordInput
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             placeholder={t("Auth.Login.yourPassword")}
             showEyeIcon={true}
             showPasswordStartIcon={true}
+            onStrengthChange={setPasswordStrength}
           />
           <Box className={classes.passwordOptions}>
             <FormControlLabel
@@ -206,15 +212,15 @@ const Login = () => {
       {isLoading && <CircularProgress />}
 
       <Box className={classes.loginOrCreateAcc}>
-        <Button
-          disabled={isLoading}
+        <FormButton
+          disabled={
+            isLoading || !username || !password || passwordStrength < 100
+          }
           variant="primary"
           type="button"
           onClick={handleSubmit}
-          className={classes.Button}
-        >
-          {t("Auth.Login.signIn")}
-        </Button>
+          label={t("Auth.Login.signIn")}
+        />
         <Typography variant="body2" className={classes.text3}>
           <Link to="/auth/register/step1" className={classes.text3}>
             {t("Auth.Login.askForRegister")}
