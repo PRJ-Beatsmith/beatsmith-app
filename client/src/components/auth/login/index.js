@@ -3,20 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../../../slices/userApiSlice";
 import { setCredentials } from "../../../slices/authSlice";
-import {
-  Box,
-  Typography,
-  FormGroup,
-  FormControlLabel,
-  CircularProgress,
-  Checkbox,
-} from "@mui/material";
+import { Box, Typography, FormGroup, CircularProgress } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import CustomInput from "components/atoms/inputs/CustomInput";
 import PasswordInput from "components/atoms/inputs/PasswordInput";
 import FormButton from "components/atoms/Buttons/formButton";
+import CheckboxInput from "components/atoms/inputs/CheckboxInput";
 
 const useStyles = makeStyles({
   root: {
@@ -190,14 +184,9 @@ const Login = () => {
             onStrengthChange={setPasswordStrength}
           />
           <Box className={classes.passwordOptions}>
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label={
-                <Typography variant="body2" className={classes.checkboxLabel}>
-                  {t("Auth.Login.rememberPassword")}
-                </Typography>
-              }
-              className={classes.checkbox}
+            <CheckboxInput
+              label={t("Auth.Login.rememberPassword")}
+              defaultChecked={true}
               variant="body2"
             />
             <Typography variant="body2" className={classes.text3}>
