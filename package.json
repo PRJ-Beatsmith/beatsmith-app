@@ -4,7 +4,7 @@
   "description": "This is the frontend part of BeatSmith. It is a web application that allows users to create and share their own beats and music.",
   "scripts": {
     "client-install": "cd client && yarn install",
-    "client-build": "cd client && yarn build",
+    "client-build": "cd client && yarn install && yarn build",
     "start": "cd client && yarn start",
     "storybook": "cd client && yarn storybook --ci",
     "format": "prettier --write",
