@@ -198,7 +198,7 @@ const Login = () => {
         </FormGroup>
       </Box>
 
-      {isLoading && <CircularProgress />}
+      {isLoading && <CircularProgress style={{ margin: "auto" }} />}
 
       <Box className={classes.loginOrCreateAcc}>
         <FormButton

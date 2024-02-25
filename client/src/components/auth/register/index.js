@@ -113,7 +113,7 @@ const Register = () => {
 
   return (
     <Box className={classes.root}>
-      <Suspense fallback={<CircularProgress />}>
+      <Suspense fallback={<CircularProgress style={{ margin: "auto" }} />}>
         <Routes>
           <Route
             path="/step1"
@@ -140,7 +140,7 @@ const Register = () => {
           />
         </Routes>
       </Suspense>
-      {isLoading && <CircularProgress />}
+      {isLoading && <CircularProgress style={{ margin: "auto" }} />}
     </Box>
   );
 };

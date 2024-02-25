@@ -18,7 +18,7 @@ function AppLayout() {
   return (
     <Box className={classes.root}>
       <Typography variant="h1">AppLayout</Typography>
-      <Suspense fallback={<CircularProgress />}>
+      <Suspense fallback={<CircularProgress style={{ margin: "auto" }} />}>
         <Routes>
           <Route path="/login" element={<div>AuthLayout</div>} />
           <Route path="/register" element={<div>AuthLayout</div>} />

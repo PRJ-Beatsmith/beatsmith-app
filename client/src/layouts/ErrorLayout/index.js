@@ -18,7 +18,7 @@ function ErrorLayout() {
   return (
     <Box className={classes.root}>
       <Typography variant="h1">ErrorLayout</Typography>
-      <Suspense fallback={<CircularProgress />}>
+      <Suspense fallback={<CircularProgress style={{ margin: "auto" }} />}>
         <Routes>
           <Route path="/404" element={<div>404</div>} />
           <Route path="/401" element={<div>401</div>} />

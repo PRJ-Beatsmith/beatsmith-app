@@ -30,7 +30,7 @@ const AppRoutes = (props) => {
 
   allowedRoutes = (
     <Fragment>
-      <Suspense fallback={<CircularProgress />}>
+      <Suspense fallback={<CircularProgress style={{ margin: "auto" }} />}>
         <Routes>
           {isDev && <Route path="/storybook" element={<StorybookRoute />} />}
 
