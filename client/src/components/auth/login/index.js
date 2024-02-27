@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useLoginMutation } from "../../../slices/userApiSlice";
-import { setCredentials } from "../../../slices/authSlice";
 import { Box, Typography, FormGroup, CircularProgress } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import { Formik, Form, Field } from "formik";
 import CustomInput from "components/atoms/inputs/CustomInput";
 import PasswordInput from "components/atoms/inputs/PasswordInput";
 import FormButton from "components/atoms/Buttons/formButton";
@@ -114,109 +112,122 @@ const useStyles = makeStyles({
 const Login = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordStrength, setPasswordStrength] = useState(0);
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
 
-  const [login, { isLoading }] = useLoginMutation();
+  useEffect(() => {}, []);
 
-  const { userInfo } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (userInfo) {
-      navigate("/", { replace: true });
-    }
-  }, [navigate, userInfo]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await login({ username, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
-      navigate("/", { replace: true });
-    } catch (error) {
-      toast.error(error?.data?.message || error.error);
-    }
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
+  const submitHandler = async (e) => {};
 
   return (
-    <Box className={classes.root}>
-      <Box className={classes.textBox}>
-        <Typography variant="h1" className={classes.text1}>
-          {t("Auth.Login.signIn")}
-        </Typography>
-        <Typography variant="h6" className={classes.text2}>
-          {t("Auth.Login.signInForFunction")}
-        </Typography>
-      </Box>
-      <Box className={classes.form}>
-        <FormGroup className={classes.formGroup}>
-          <label htmlFor="text" className={classes.label}>
-            {t("Auth.Login.Username")}
-          </label>
-          <CustomInput
-            fullWidth
-            style={{ width: "400px", height: "50px" }}
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder={t("Auth.Login.yourUsername")}
-            showUserStartIcon={true}
-          />
-        </FormGroup>
-        <FormGroup className={classes.formGroup}>
-          <label htmlFor="password" className={classes.label}>
-            {t("Auth.Login.Password")}
-          </label>
-          <PasswordInput
-            value={password}
-            onChange={handlePasswordChange}
-            placeholder={t("Auth.Login.yourPassword")}
-            showEyeIcon={true}
-            showPasswordStartIcon={true}
-            onStrengthChange={setPasswordStrength}
-          />
-          <Box className={classes.passwordOptions}>
-            <CheckboxInput
-              label={t("Auth.Login.rememberPassword")}
-              defaultChecked={true}
-              variant="body2"
-            />
-            <Typography variant="body2" className={classes.text3}>
-              <Link to="/auth/forgot-password" className={classes.text3}>
-                {t("Auth.Login.forgotPassword")}
-              </Link>
-            </Typography>
+    <Formik
+      initialValues={{ email: "", password: "", rememberPassword: true }}
+      validateOnChange={true}
+      validate={(values) => {
+        const errors = {};
+        if (!values.emailField) {
+          errors.emailField = "Required";
+        } else if (
+          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.emailField)
+        ) {
+          errors.emailField = "Invalid email address";
+        }
+        return errors;
+      }}
+      onSubmit={async (values, { setSubmitting }) => {
+        await new Promise((r) => setTimeout(r, 500));
+        setSubmitting(false);
+        submitHandler(values);
+      }}
+    >
+      {({ submitForm, isSubmitting, dirty, setFieldValue, values }) => (
+        <>
+          {isSubmitting && <CircularProgress style={{ margin: "auto" }} />}
+          <Box className={classes.root}>
+            <Form>
+              <Box className={classes.textBox}>
+                <Typography variant="h1" className={classes.text1}>
+                  {t("Auth.Login.signIn")}
+                </Typography>
+                <Typography variant="h6" className={classes.text2}>
+                  {t("Auth.Login.signInForFunction")}
+                </Typography>
+              </Box>
+              <Box className={classes.form}>
+                <FormGroup className={classes.formGroup}>
+                  <label htmlFor="text" className={classes.label}>
+                    {t("Auth.Login.Username")}
+                  </label>
+                  <Field
+                    component={CustomInput}
+                    fullWidth
+                    style={{ width: "400px", height: "50px" }}
+                    type="text"
+                    onChange={(event) =>
+                      setFieldValue("emailField", event.target.value)
+                    }
+                    placeholder={t("Auth.Login.yourUsername")}
+                    showUserStartIcon={true}
+                  />
+                </FormGroup>
+                <FormGroup className={classes.formGroup}>
+                  <label htmlFor="password" className={classes.label}>
+                    {t("Auth.Login.Password")}
+                  </label>
+                  <Field
+                    component={PasswordInput}
+                    onChange={(event) =>
+                      setFieldValue("passwordField", event.target.value)
+                    }
+                    placeholder={t("Auth.Login.yourPassword")}
+                    showEyeIcon={true}
+                    showPasswordStartIcon={true}
+                  />
+                  <Box className={classes.passwordOptions}>
+                    <Field
+                      component={CheckboxInput}
+                      type="checkbox"
+                      name="rememberPassword"
+                      onChange={(event) =>
+                        setFieldValue("rememberPassword", event.target.checked)
+                      }
+                      variant="body2"
+                      defaultChecked={true}
+                      label={t("Auth.Login.rememberPassword")}
+                    />
+                    <Typography variant="body2" className={classes.text3}>
+                      <Link
+                        to="/auth/forgot-password"
+                        className={classes.text3}
+                      >
+                        {t("Auth.Login.forgotPassword")}
+                      </Link>
+                    </Typography>
+                  </Box>
+                </FormGroup>
+              </Box>
+            </Form>
+            <Box className={classes.loginOrCreateAcc}>
+              <FormButton
+                disabled={!dirty}
+                variant="primary"
+                type="button"
+                onClick={submitHandler}
+                label={t("Auth.Login.signIn")}
+              />
+              <Typography variant="body2" className={classes.text3}>
+                <Link to="/auth/register/step1" className={classes.text3}>
+                  {t("Auth.Login.askForRegister")}
+                </Link>
+              </Typography>
+            </Box>
           </Box>
-        </FormGroup>
-      </Box>
-
-      {isLoading && <CircularProgress style={{ margin: "auto" }} />}
-
-      <Box className={classes.loginOrCreateAcc}>
-        <FormButton
-          disabled={
-            isLoading || !username || !password || passwordStrength < 100
-          }
-          variant="primary"
-          type="button"
-          onClick={handleSubmit}
-          label={t("Auth.Login.signIn")}
-        />
-        <Typography variant="body2" className={classes.text3}>
-          <Link to="/auth/register/step1" className={classes.text3}>
-            {t("Auth.Login.askForRegister")}
-          </Link>
-        </Typography>
-      </Box>
-    </Box>
+        </>
+      )}
+    </Formik>
   );
 };
 
