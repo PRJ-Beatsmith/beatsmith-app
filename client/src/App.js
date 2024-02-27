@@ -10,20 +10,23 @@ import { CssBaseline } from "@mui/material";
 import "./App.scss";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { AuthProvider } from "utils/contexts/authContexts";
 
 function App() {
   return (
     <Fragment>
       <DndProvider backend={HTML5Backend}>
         <ToastContainer />
-        <Router history={history}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <div className="App" id="App">
-              <AppRoutes />
-            </div>
-          </ThemeProvider>
-        </Router>
+        <AuthProvider>
+          <Router history={history}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <div className="App" id="App">
+                <AppRoutes />
+              </div>
+            </ThemeProvider>
+          </Router>
+        </AuthProvider>
       </DndProvider>
     </Fragment>
   );
