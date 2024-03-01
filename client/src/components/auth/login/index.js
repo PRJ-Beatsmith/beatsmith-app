@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Box, Typography, FormGroup, CircularProgress } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,6 +9,7 @@ import CustomInput from "components/atoms/inputs/CustomInput";
 import PasswordInput from "components/atoms/inputs/PasswordInput";
 import FormButton from "components/atoms/Buttons/formButton";
 import CheckboxInput from "components/atoms/inputs/CheckboxInput";
+import { defaultSignIn } from "core/auth";
 
 const useStyles = makeStyles({
   root: {
@@ -112,15 +113,18 @@ const useStyles = makeStyles({
 const Login = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-
-  useEffect(() => {}, []);
-
-  const submitHandler = async (e) => {};
+  const submitHandler = async (values) => {
+    const { email, password } = values;
+    try {
+      await defaultSignIn(email, password);
+      toast.success("Login erfolgreich!");
+      navigate("/");
+    } catch (error) {
+      toast.error("Login fehlgeschlagen! Bitte überprüfen Sie Ihre Angaben.");
+    }
+  };
 
   return (
     <Formik
@@ -133,14 +137,16 @@ const Login = () => {
         } else if (
           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.emailField)
         ) {
+          const emailError = errors.emailField;
           errors.emailField = "Invalid email address";
+          toast.error(emailError?.data?.message || emailError?.message);
         }
         return errors;
       }}
       onSubmit={async (values, { setSubmitting }) => {
         await new Promise((r) => setTimeout(r, 500));
+        await submitHandler(values);
         setSubmitting(false);
-        submitHandler(values);
       }}
     >
       {({ submitForm, isSubmitting, dirty, setFieldValue, values }) => (
