@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     gap: "3px",
   },
   text1: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Noto Sans",
     fontSize: "36px",
     fontStyle: "normal",
     fontWeight: 700,
@@ -34,13 +34,23 @@ const useStyles = makeStyles({
   },
   text2: {
     textAlign: "center",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter",
     fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 400,
     lineHeight: "142%",
     color: "#636B74",
     paddingBottom: "17px",
+  },
+  text3: {
+    color: "#E94057",
+    textAlign: "center",
+    fontFamily: "Inter",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "142%",
+    textDecoration: "none",
   },
   form: {
     display: "inline-flex",
@@ -50,15 +60,15 @@ const useStyles = makeStyles({
     gap: "50px",
     marginTop: "65px",
   },
-  formGroup: {},
   label: {
+    color: "#F0F4F8",
     display: "flex",
     alignItems: "flex-start",
-    fontFamily: "Montserrat, sans-serif",
-    fontSize: "12px",
+    fontFamily: "Inter",
+    fontSize: "14px",
     fontStyle: "normal",
-    fontWeight: 700,
-    lineHeight: "normal",
+    fontWeight: 500,
+    lineHeight: "150%",
     marginBottom: "5px",
   },
   loginOrCreateAcc: {
@@ -77,16 +87,7 @@ const useStyles = makeStyles({
     borderRadius: "7px",
     background: "#E94057",
   },
-  text3: {
-    color: "#E94057",
-    textAlign: "center",
-    fontFamily: "Montserrat, sans-serif",
-    fontSize: "14px",
-    fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "150%",
-    textDecoration: "none",
-  },
+
   passwordOptions: {
     display: "flex",
     justifyContent: "space-between",
@@ -119,10 +120,10 @@ const Login = () => {
     const { email, password } = values;
     try {
       await defaultSignIn(email, password);
-      toast.success("Login erfolgreich!");
+      toast.success(t("Auth.Validate.SuccessSignIn"));
       navigate("/");
     } catch (error) {
-      toast.error("Login fehlgeschlagen! Bitte überprüfen Sie Ihre Angaben.");
+      toast.error(t("Auth.Validate.ErrorSignIn"));
     }
   };
 
@@ -132,13 +133,13 @@ const Login = () => {
       validateOnChange={true}
       validate={(values) => {
         const errors = {};
-        if (!values.emailField) {
-          errors.emailField = "Required";
+        if (!values.email) {
+          errors.email = t("Auth.Validate.EmailRequired");
         } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.emailField)
+          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
         ) {
-          const emailError = errors.emailField;
-          errors.emailField = "Invalid email address";
+          const emailError = errors.email;
+          errors.email = t("Auth.Validate.InvalidEmailError");
           toast.error(emailError?.data?.message || emailError?.message);
         }
         return errors;
@@ -149,7 +150,7 @@ const Login = () => {
         setSubmitting(false);
       }}
     >
-      {({ submitForm, isSubmitting, dirty, setFieldValue, values }) => (
+      {({ isSubmitting, dirty, setFieldValue }) => (
         <>
           {isSubmitting && <CircularProgress style={{ margin: "auto" }} />}
           <Box className={classes.root}>
@@ -164,19 +165,21 @@ const Login = () => {
               </Box>
               <Box className={classes.form}>
                 <FormGroup className={classes.formGroup}>
-                  <label htmlFor="text" className={classes.label}>
-                    {t("Auth.Login.Username")}
+                  <label htmlFor="email" className={classes.label}>
+                    {t("Auth.Login.Email")}
                   </label>
                   <Field
+                    name="email"
                     component={CustomInput}
+                    id="email"
                     fullWidth
                     style={{ width: "400px", height: "50px" }}
-                    type="text"
+                    type="email"
                     onChange={(event) =>
-                      setFieldValue("emailField", event.target.value)
+                      setFieldValue("email", event.target.value)
                     }
-                    placeholder={t("Auth.Login.yourUsername")}
-                    showUserStartIcon={true}
+                    placeholder={t("Auth.Login.yourEmail")}
+                    showEmailStartIcon={true}
                   />
                 </FormGroup>
                 <FormGroup className={classes.formGroup}>
@@ -185,8 +188,10 @@ const Login = () => {
                   </label>
                   <Field
                     component={PasswordInput}
+                    name="password"
+                    id="password"
                     onChange={(event) =>
-                      setFieldValue("passwordField", event.target.value)
+                      setFieldValue("password", event.target.value)
                     }
                     placeholder={t("Auth.Login.yourPassword")}
                     showEyeIcon={true}
@@ -196,13 +201,15 @@ const Login = () => {
                     <Field
                       component={CheckboxInput}
                       type="checkbox"
-                      name="rememberPassword"
+                      name="remember"
+                      id="remember"
                       onChange={(event) =>
                         setFieldValue("rememberPassword", event.target.checked)
                       }
                       variant="body2"
                       defaultChecked={true}
                       label={t("Auth.Login.rememberPassword")}
+                      autoComplete="current-password"
                     />
                     <Typography variant="body2" className={classes.text3}>
                       <Link
@@ -220,12 +227,12 @@ const Login = () => {
               <FormButton
                 disabled={!dirty}
                 variant="primary"
-                type="button"
+                type="submit"
                 onClick={submitHandler}
                 label={t("Auth.Login.signIn")}
               />
               <Typography variant="body2" className={classes.text3}>
-                <Link to="/auth/register/step1" className={classes.text3}>
+                <Link to="/auth/register/" className={classes.text3}>
                   {t("Auth.Login.askForRegister")}
                 </Link>
               </Typography>

@@ -8,17 +8,16 @@ const useStyles = makeStyles({
   root: {
     flexShrink: 0,
     borderRadius: "4px",
-    // border: "2px solid #EC4E49",
     background: "#0B0D0E",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "stretch",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter",
     fontSize: "16px",
     fontStyle: "normal",
     fontWeight: 400,
-    lineHeight: "normal",
+    lineHeight: "150%",
     color: "#FFF",
   },
 });
@@ -31,6 +30,8 @@ const CustomInput = ({
   placeholder,
   fullWidth,
   style,
+  autoComplete,
+  id,
   showEmailStartIcon,
   showUserStartIcon,
   ...otherProps
@@ -44,10 +45,12 @@ const CustomInput = ({
       type={type}
       value={value}
       onChange={onChange}
+      autoComplete={autoComplete}
       label={label}
       placeholder={placeholder}
       {...otherProps}
       className={classes.root}
+      id={id}
       sx={{
         "&:hover .MuiOutlinedInput-notchedOutline": {
           border: "none",
@@ -57,7 +60,7 @@ const CustomInput = ({
             border: "none",
           },
           "&.Mui-focused fieldset": {
-            border: "2px solid #EC4E49", // Roten Rand bei Fokus anzeigen
+            border: "2px solid #EC4E49",
           },
         },
       }}

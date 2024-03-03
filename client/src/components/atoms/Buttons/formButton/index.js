@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   textLabel: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Noto Sans",
     fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 600,

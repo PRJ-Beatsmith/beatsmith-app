@@ -14,30 +14,55 @@
       "signInForFunction": "Please login.",
       "Password": "Password",
       "Username": "Username",
+      "Email": "E-Mail Address",
       "yourUsername": "Your Username",
       "yourPassword": "Your Password",
+      "yourEmail": "Your E-Mail Address",
       "rememberPassword": "Remember Password",
       "forgotPassword": "Forgot Password?",
       "askForRegister": "No account yet? Register here for free."
     },
     "Register": {
       "Step1": {
-        "whoAreYou": "Who are you? 👋",
-        "Welcome": "Welcome to ReAlign.",
-        "letsStart": "Let's start with the basics.",
-        "yourFirstName": "Your First Name",
-        "yourLastName": "Your Last Name",
-        "yourEmail": "Your E-Mail Address",
-        "yourBirthday": "Your Birthday",
-        "yourUsername": "Your Username",
-        "proceed": "Proceed",
+        "Welcome": "👋 Welcome",
+        "letsStart": "A small step for you, but a big step for your career. Career. Register for free and create your masterpiece. We will guide you step by step through the registration process.",
+        "FirstName": "First Name",
+        "LastName": "Last Name",
+        "Email": "E-Mail Address",
+        "Birthday": "Birthday",
+        "Username": "Username",
+        "yourFirstName": "John",
+        "yourLastName": "Doe",
+        "yourEmail": "johndoe@example.com",
+        "yourBirthday": "TT.MM.JJJJ",
+        "yourUsername": "JohnTheRapper",
+        "proceed": "Set password now",
         "askForLogin": "Already have an account? You can log in here.",
         "emptyFieldsError": "Please fill in all fields.",
         "invalidEmailError": "Please enter a valid e-mail address",
-        "under18Error": "You must be at least 18 years old."
+        "under18Error": "You must be at least 16 years old."
       },
       "Step2": {},
-      "Step3": {}
+      "Step3": {},
+      "Step4": {}
+    },
+    "Validate": {
+      "InvalidEmailError": "Please enter a valid email address.",
+      "EmptyFieldsError": "Please fill in all fields.",
+      "Under16Error": "You must be at least 16 years old.",
+      "ToShort": "Too short!",
+      "ToLong": "Too long!",
+      "FirstNameRequired": "First name is required.",
+      "LastNameRequired": "Last name is required.",
+      "EmailRequired": "Email is required.",
+      "BirthdayRequired": "Birthday is required.",
+      "UsernameRequired": "Username is required.",
+      "CharactersToShort": "Must be at least {min} characters.",
+      "CharactersToLong": "Must be at most {max} characters.",
+      "SuccessSignUp": "Sign up successful! You can now log in.",
+      "ErrorSignUp": "Error during sign up. Please try again.",
+      "SuccessSignIn": "Sign in successful! Welcome back.",
+      "ErrorSignIn": "Error during sign in. Please check your credentials and try again."
     }
   }
 }

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import { Box, Button, Typography, FormGroup } from "@mui/material";
+import { Box, Typography, FormGroup, CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import CustomInput from "components/atoms/inputs/CustomInput";
+import FormButton from "components/atoms/Buttons/formButton";
 
 const useStyles = makeStyles({
   root: {
@@ -17,37 +20,33 @@ const useStyles = makeStyles({
   textBox: {
     display: "inline-flex",
     flexDirection: "column",
-    alignItems: "flex-start",
-    gap: "20px",
-  },
-  textBox2: {
-    display: "inline-flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: "center",
+    gap: "10px",
   },
   text1: {
-    fontFamily: "Ubuntu, sans-serif",
-    fontSize: "32px",
+    fontFamily: "Noto Sans",
+    fontSize: "36px",
     fontStyle: "normal",
     fontWeight: 700,
-    lineHeight: "normal",
+    lineHeight: "133%",
   },
   text2: {
+    color: "#636B74",
     textAlign: "center",
-    fontFamily: "Montserrat, sans-serif",
-    fontSize: "20px",
+    fontFamily: "Inter",
+    fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 400,
-    lineHeight: "normal",
+    lineHeight: "142%",
   },
   text3: {
     color: "#E94057",
     textAlign: "center",
-    fontFamily: "Montserrat, sans-serif",
-    fontSize: "13px",
+    fontFamily: "Inter",
+    fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 400,
-    lineHeight: "normal",
+    lineHeight: "142%",
     textDecoration: "none",
   },
   form: {
@@ -59,30 +58,22 @@ const useStyles = makeStyles({
     marginTop: "50px",
   },
   label: {
+    color: "#F0F4F8",
     display: "flex",
     alignItems: "flex-start",
-    fontFamily: "Ubuntu, sans-serif",
-    fontSize: "12px",
+    fontFamily: "Inter",
+    fontSize: "14px",
     fontStyle: "normal",
-    fontWeight: 700,
-    lineHeight: "normal",
+    fontWeight: 500,
+    lineHeight: "150%",
     marginBottom: "5px",
-  },
-  Button: {
-    display: "flex",
-    padding: "10px 30px",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "10px",
-    borderRadius: "7px",
-    background: "#E94057",
   },
   loginOrCreateAcc: {
     display: "inline-flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "20px",
-    marginTop: "82px",
+    gap: "16px",
+    marginTop: "53px",
   },
   firstLine: {
     display: "flex",
@@ -115,144 +106,217 @@ const StepOne = ({ onNext }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [email, setEmail] = useState("");
+  const validateSchema = Yup.object().shape({
+    email: Yup.string()
+      .email(t("Auth.Validate.InvalidEmailError"))
+      .required(t("Auth.Validate.EmailRequired")),
+    firstName: Yup.string()
+      .min(3, t("Auth.Validate.ToShort"))
+      .max(50, t("Auth.Validate.ToLong"))
+      .required(t("Auth.Validate.FirstNameRequired")),
+    lastName: Yup.string()
+      .min(3, t("Auth.Validate.ToShort"))
+      .max(50, t("Auth.Validate.ToLong"))
+      .required(t("Auth.Validate.LastNameRequired")),
+    birthday: Yup.date()
+      .required(t("Auth.Validate.BirthdayRequired"))
+      .test("age", t("Auth.Validate.Under16Error"), (value) => {
+        return calculateAge(value) >= 16;
+      }),
+    username: Yup.string()
+      .min(4, t("Auth.Validate.CharactersToShort", { min: 4 }))
+      .max(20, t("Auth.Validate.CharactersToLong", { max: 20 }))
+      .required(t("Auth.Validate.UsernameRequired")),
+  });
 
-  const isValidEmail = (email) => {
-    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    return re.test(String(email).toLowerCase());
-  };
-
-  const handleSubmit = () => {
-    if (!firstName || !lastName || !email || !birthday || !username) {
-      toast.error(t("Auth.Register.Step1.emptyFieldsError"));
-      return;
+  const handleSubmit = (values, { setSubmitting }) => {
+    try {
+      setSubmitting(false);
+      toast.success(t("Auth.Validate.SuccessSignUp"));
+      onNext(values);
+    } catch (error) {
+      setSubmitting(false);
+      toast.error(t("Auth.Validate.ErrorSignUp"));
     }
-
-    if (!isValidEmail(email)) {
-      toast.error(t("Auth.Register.Step1.invalidEmailError"));
-      return;
-    }
-
-    const age = calculateAge(birthday);
-    if (age < 18) {
-      toast.error(t("Auth.Register.Step1.under18Error"));
-      return;
-    }
-
-    onNext({ firstName, lastName, birthday, email, username });
   };
 
   return (
-    <Box className={classes.root}>
-      <Box className={classes.textBox}>
-        <Typography variant="h1" className={classes.text1}>
-          {t("Auth.Register.Step1.whoAreYou")}
-        </Typography>
-        <Box className={classes.textBox2}>
-          <Typography variant="h4" className={classes.text2}>
-            {t("Auth.Register.Step1.Welcome")}
-          </Typography>
-          <Typography variant="h4" className={classes.text2}>
-            {t("Auth.Register.Step1.letsStart")}
-          </Typography>
-        </Box>
-      </Box>
-      <Box className={classes.form}>
-        <Box className={classes.firstLine}>
-          <FormGroup className={classes.formGroup}>
-            <label className={classes.label} htmlFor="firstName">
-              {t("Auth.Register.Step1.yourFirstName")}
-            </label>
-            <CustomInput
-              type="text"
-              placeholder="John"
-              style={{ width: "200px", height: "50px", flexShrink: 0 }}
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup className={classes.formGroup}>
-            <label className={classes.label} htmlFor="lastName">
-              {t("Auth.Register.Step1.yourLastName")}
-            </label>
-            <CustomInput
-              type="text"
-              placeholder="Doe"
-              style={{ width: "200px", height: "50px", flexShrink: 0 }}
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </FormGroup>
-        </Box>
-        <Box className={classes.secondLine}>
-          <FormGroup className={classes.formGroup}>
-            <label className={classes.label} htmlFor="email">
-              {t("Auth.Register.Step1.yourEmail")}
-            </label>
-            <CustomInput
-              required
-              fullWidth
-              type="email"
-              placeholder="re.align@user.com"
-              style={{ width: "440px", height: "50px" }}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </FormGroup>
-        </Box>
-        <Box className={classes.thirdLine}>
-          <FormGroup className={classes.formGroup}>
-            <label className={classes.label} htmlFor="email">
-              {t("Auth.Register.Step1.yourUsername")}
-            </label>
-            <CustomInput
-              fullWidth
-              id="username"
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              style={{ width: "200px", height: "50px", flexShrink: 0 }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </FormGroup>
-          <FormGroup className={classes.formGroup}>
-            <label className={classes.label} htmlFor="email">
-              {t("Auth.Register.Step1.yourBirthday")}
-            </label>
-            <CustomInput
-              fullWidth
-              id="date"
-              type="date"
-              value={birthday}
-              onChange={(e) => setBirthday(e.target.value)}
-              style={{ width: "200px", height: "50px", flexShrink: 0 }}
-            />
-          </FormGroup>
-        </Box>
-      </Box>
-      <Box className={classes.loginOrCreateAcc}>
-        <Button
-          variant="primary"
-          type="button"
-          onClick={handleSubmit}
-          className={classes.Button}
-        >
-          {t("Auth.Register.Step1.proceed")}
-        </Button>
-        <Typography variant="body1" className={classes.text3}>
-          <Link to="/auth/login" className={classes.text3}>
-            {t("Auth.Register.Step1.askForLogin")}
-          </Link>
-        </Typography>
-      </Box>
-    </Box>
+    <Formik
+      initialValues={{
+        email: "",
+        firstName: "",
+        lastName: "",
+        birthday: "",
+        username: "",
+      }}
+      validateOnChange={true}
+      validationSchema={validateSchema}
+      onSubmit={(values, { setSubmitting }) => {
+        setSubmitting(true);
+        try {
+          toast.success(t("Auth.Validate.SuccessSignUp"));
+          onNext(values);
+        } catch (error) {
+          toast.error(t("Auth.Validate.ErrorSignUp"));
+        }
+        setSubmitting(false);
+      }}
+    >
+      {({
+        isSubmitting,
+        errors,
+        touched,
+        dirty,
+        setFieldValue,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isValid,
+      }) => (
+        <>
+          {isSubmitting && <CircularProgress style={{ margin: "auto" }} />}
+          <Box className={classes.root}>
+            <Form onSubmit={handleSubmit}>
+              <Box className={classes.textBox}>
+                <Typography variant="h4" className={classes.text1}>
+                  {t("Auth.Register.Step1.Welcome")}
+                </Typography>
+                <Typography variant="h4" className={classes.text2}>
+                  {t("Auth.Register.Step1.letsStart")}
+                </Typography>
+              </Box>
+              <Box className={classes.form}>
+                <Box className={classes.firstLine}>
+                  <FormGroup className={classes.formGroup}>
+                    <label className={classes.label} htmlFor="firstName">
+                      {t("Auth.Register.Step1.FirstName")}
+                    </label>
+                    <Field
+                      component={CustomInput}
+                      name="firstName"
+                      id="firstName"
+                      style={{ width: "200px", height: "50px", flexShrink: 0 }}
+                      type="text"
+                      onChange={(event) =>
+                        setFieldValue("firstName", event.target.value)
+                      }
+                      placeholder={t("Auth.Register.Step1.yourFirstName")}
+                      required
+                      autoComplete="given-name"
+                    />
+                    {touched.firstName && errors.firstName && (
+                      <Box style={{ color: "red" }}>{errors.firstName}</Box>
+                    )}
+                  </FormGroup>
+                  <FormGroup className={classes.formGroup}>
+                    <label className={classes.label} htmlFor="lastName">
+                      {t("Auth.Register.Step1.LastName")}
+                    </label>
+                    <Field
+                      component={CustomInput}
+                      name="lastName"
+                      id="lastName"
+                      style={{ width: "200px", height: "50px", flexShrink: 0 }}
+                      type="text"
+                      onChange={(event) =>
+                        setFieldValue("lastName", event.target.value)
+                      }
+                      placeholder={t("Auth.Register.Step1.yourLastName")}
+                      required
+                      autoComplete="family-name"
+                    />
+                    {touched.lastName && errors.lastName && (
+                      <Box style={{ color: "red" }}>{errors.lastName}</Box>
+                    )}
+                  </FormGroup>
+                </Box>
+                <Box className={classes.secondLine}>
+                  <FormGroup className={classes.formGroup}>
+                    <label className={classes.label} htmlFor="email">
+                      {t("Auth.Register.Step1.Email")}
+                    </label>
+                    <Field
+                      name="email"
+                      component={CustomInput}
+                      id="email"
+                      fullWidth
+                      style={{ width: "440px", height: "50px" }}
+                      type="email"
+                      onChange={(event) =>
+                        setFieldValue("email", event.target.value)
+                      }
+                      placeholder={t("Auth.Register.Step1.yourEmail")}
+                      showEmailStartIcon={true}
+                      autoComplete="email"
+                    />
+                    {touched.email && errors.email && (
+                      <Box style={{ color: "red" }}>{errors.email}</Box>
+                    )}
+                  </FormGroup>
+                </Box>
+                <Box className={classes.thirdLine}>
+                  <FormGroup className={classes.formGroup}>
+                    <label className={classes.label} htmlFor="username">
+                      {t("Auth.Register.Step1.Username")}
+                    </label>
+                    <Field
+                      component={CustomInput}
+                      name="username"
+                      id="username"
+                      style={{ width: "200px", height: "50px", flexShrink: 0 }}
+                      type="text"
+                      onChange={(event) =>
+                        setFieldValue("username", event.target.value)
+                      }
+                      placeholder={t("Auth.Register.Step1.yourUsername")}
+                      required
+                    />
+                    {touched.username && errors.username && (
+                      <Box style={{ color: "red" }}>{errors.username}</Box>
+                    )}
+                  </FormGroup>
+                  <FormGroup className={classes.formGroup}>
+                    <label className={classes.label} htmlFor="birthday">
+                      {t("Auth.Register.Step1.Birthday")}
+                    </label>
+                    <Field
+                      component={CustomInput}
+                      name="birthday"
+                      id="birthday"
+                      style={{ width: "200px", height: "50px", flexShrink: 0 }}
+                      type="date"
+                      onChange={(event) =>
+                        setFieldValue("birthday", event.target.value)
+                      }
+                      placeholder={t("Auth.Register.Step1.yourBirthday")}
+                      required
+                      fullWidth
+                    />
+                    {touched.birthday && errors.birthday && (
+                      <Box style={{ color: "red" }}>{errors.birthday}</Box>
+                    )}
+                  </FormGroup>
+                </Box>
+              </Box>
+              <Box className={classes.loginOrCreateAcc}>
+                <FormButton
+                  disabled={isSubmitting || !isValid || !dirty}
+                  variant="primary"
+                  type="submit"
+                  label={t("Auth.Register.Step1.proceed")}
+                  showNextIcon={true}
+                />
+                <Typography variant="body1" className={classes.text3}>
+                  <Link to="/auth/login" className={classes.text3}>
+                    {t("Auth.Register.Step1.askForLogin")}
+                  </Link>
+                </Typography>
+              </Box>
+            </Form>
+          </Box>
+        </>
+      )}
+    </Formik>
   );
 };
 

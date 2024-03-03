@@ -21,11 +21,11 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter",
     fontSize: "16px",
     fontStyle: "normal",
     fontWeight: 400,
-    lineHeight: "normal",
+    lineHeight: "150%",
     color: "#FFF",
   },
   progressBar: {
@@ -43,6 +43,7 @@ const PasswordInput = ({
   placeholder,
   onChange,
   onStrengthChange,
+  id,
 }) => {
   const classes = useStyles();
 
@@ -126,6 +127,7 @@ const PasswordInput = ({
         value={value}
         onChange={handleChange}
         className={classes.root}
+        id={id}
         sx={{
           "&:hover .MuiOutlinedInput-notchedOutline": {
             border: "none",

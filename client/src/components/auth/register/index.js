@@ -1,15 +1,14 @@
-import React, { Suspense, useState, useEffect } from "react";
+import React, { Suspense, useState, lazy } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
 import { Box, CircularProgress } from "@mui/material";
-import { useRegisterMutation } from "../../../slices/userApiSlice";
-import { setCredentials } from "../../../slices/authSlice";
 import { toast } from "react-toastify";
-import StepOne from "./StepOne";
-import StepTwo from "./StepTwo";
-import StepThree from "./StepThree";
-import StepFour from "./StepFour";
+import { defaultSignUp } from "core/auth";
+
+const StepOne = lazy(() => import("./StepOne"));
+const StepTwo = lazy(() => import("./StepTwo"));
+const StepThree = lazy(() => import("./StepThree"));
+const StepFour = lazy(() => import("./StepFour"));
 
 const useStyles = makeStyles({
   root: {
@@ -22,13 +21,8 @@ const useStyles = makeStyles({
 
 const Register = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-
-  const [register, { isLoading }] = useRegisterMutation();
-
-  const { userInfo } = useSelector((state) => state.auth);
 
   const [registrationData, setRegistrationData] = useState({
     firstName: "",
@@ -40,11 +34,16 @@ const Register = () => {
     agreementsAccepted: false,
   });
 
-  useEffect(() => {
-    if (userInfo) {
+  const submitRegistration = async (values) => {
+    const { email, password } = values;
+    try {
+      await defaultSignUp(email, password);
+      toast.success("Registration successful");
       navigate("/");
+    } catch (error) {
+      toast.error(error.message);
     }
-  }, [navigate, userInfo]);
+  };
 
   const goToNextStep = () => {
     if (currentStep < 3) {
@@ -72,44 +71,12 @@ const Register = () => {
 
   const handleStepThreeData = (data) => {
     setRegistrationData({ ...registrationData, ...data });
-    submitRegistration();
+    goToNextStep();
   };
 
-  const submitRegistration = async (e) => {
-    e.preventDefault();
-
-    const {
-      password,
-      confirmPassword,
-      firstName,
-      lastName,
-      email,
-      birthday,
-      username,
-    } = registrationData;
-
-    if (password !== confirmPassword) {
-      toast.error("Passwörter stimmen nicht überein");
-      return;
-    }
-
-    try {
-      const res = await register({
-        firstName,
-        lastName,
-        username,
-        email,
-        birthday,
-        password,
-      }).unwrap();
-
-      dispatch(setCredentials({ ...res }));
-      navigate("/");
-    } catch (error) {
-      toast.error(error?.data?.message || error?.message);
-    }
-
-    console.log("Einreichung der Registrierung: ", registrationData);
+  const handleStepFourData = (data) => {
+    setRegistrationData({ ...registrationData, ...data });
+    submitRegistration();
   };
 
   return (
@@ -137,7 +104,9 @@ const Register = () => {
           />
           <Route
             path="/step4"
-            element={<StepFour onBack={goToPreviousStep} />}
+            element={
+              <StepFour onBack={goToPreviousStep} onNext={handleStepFourData} />
+            }
           />
           <Route
             path="*"
@@ -145,7 +114,6 @@ const Register = () => {
           />
         </Routes>
       </Suspense>
-      {isLoading && <CircularProgress style={{ margin: "auto" }} />}
     </Box>
   );
 };

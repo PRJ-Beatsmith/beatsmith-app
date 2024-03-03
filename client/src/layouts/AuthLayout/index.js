@@ -1,10 +1,11 @@
-import React, { Suspense, memo } from "react";
+import React, { Suspense, memo, lazy } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, CircularProgress } from "@mui/material";
-import Login from "components/auth/login";
-import Register from "components/auth/register";
 import { AuthCarousel } from "components/organisms/Carousels";
+
+const Login = lazy(() => import("components/auth/login"));
+const Register = lazy(() => import("components/auth/register"));
 
 const useStyles = makeStyles({
   root: {

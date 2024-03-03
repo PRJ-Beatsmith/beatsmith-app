@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CheckboxInput = ({ label, variant, onChange, defaultChecked }) => {
+const CheckboxInput = ({ label, variant, onChange, defaultChecked, id }) => {
   const classes = useStyles();
 
   return (
@@ -44,6 +44,7 @@ const CheckboxInput = ({ label, variant, onChange, defaultChecked }) => {
           {label}
         </Typography>
       }
+      id={id}
       variant={variant}
       className={classes.checkbox}
     />
