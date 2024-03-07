@@ -32,6 +32,7 @@ const CustomInput = ({
   style,
   autoComplete,
   id,
+  name,
   showEmailStartIcon,
   showUserStartIcon,
   ...otherProps
@@ -50,6 +51,7 @@ const CustomInput = ({
       placeholder={placeholder}
       {...otherProps}
       className={classes.root}
+      name={name}
       id={id}
       sx={{
         "&:hover .MuiOutlinedInput-notchedOutline": {
@@ -62,6 +64,12 @@ const CustomInput = ({
           "&.Mui-focused fieldset": {
             border: "2px solid #EC4E49",
           },
+        },
+        "& .MuiInputBase-input": {
+          color: "white",
+        },
+        "& .MuiSvgIcon-root": {
+          color: "white",
         },
       }}
       required

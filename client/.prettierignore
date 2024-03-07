@@ -4,6 +4,7 @@
 /dist/
 /.storybook/
 /keys/
+/public/manifest.json
 
 # Minimized files
 *.min.js

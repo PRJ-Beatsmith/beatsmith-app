@@ -129,16 +129,16 @@ const StepOne = ({ onNext }) => {
       .required(t("Auth.Validate.UsernameRequired")),
   });
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    try {
-      setSubmitting(false);
-      toast.success(t("Auth.Validate.SuccessSignUp"));
-      onNext(values);
-    } catch (error) {
-      setSubmitting(false);
-      toast.error(t("Auth.Validate.ErrorSignUp"));
-    }
-  };
+  // const handleSubmit = (values, { setSubmitting }) => {
+  //   try {
+  //     setSubmitting(false);
+  //     toast.success(t("Auth.Validate.SuccessSignUp"));
+  //     onNext(values);
+  //   } catch (error) {
+  //     setSubmitting(false);
+  //     toast.error(t("Auth.Validate.ErrorSignUp"));
+  //   }
+  // };
 
   return (
     <Formik
