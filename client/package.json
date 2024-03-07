@@ -16,6 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.3",
     "classnames": "^2.5.0",
+    "cross-env": "^7.0.3",
     "debug": "^4.3.4",
     "emoji-picker-react": "^4.6.0",
     "firebase": "^10.8.0",
@@ -85,7 +86,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "cross-env PUBLIC_URL=. react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",

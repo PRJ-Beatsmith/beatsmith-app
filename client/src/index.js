@@ -7,7 +7,6 @@ import { I18nextProvider } from "react-i18next";
 import App from "./App";
 import i18n from "./core/i18n";
 import reportWebVitals from "./reportWebVitals";
-import "typeface-roboto";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
