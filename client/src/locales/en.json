@@ -1,4 +1,9 @@
 {
+  "actions": {
+    "Success": "Success",
+    "Failure": "Failure",
+    "Scanned image requested please wait before requesting again": "Scanned image requested, please wait before requesting again"
+  },
   "Layout": {
     "Auth": {
       "CarouselText1": "All your producers in one place.",

@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   checkbox: {
-    fontFamily: "Montserrat",
+    fontFamily: "Noto Sans",
     fontSize: "16px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
   checkboxLabel: {
     color: "#EAEEF6",
-    fontFamily: "Montserrat",
+    fontFamily: "Noto Sans",
     fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 400,

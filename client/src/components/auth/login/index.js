@@ -95,7 +95,7 @@ const useStyles = makeStyles({
     gap: "10px",
   },
   checkbox: {
-    fontFamily: "Montserrat",
+    fontFamily: "Noto Sans",
     fontSize: "16px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -103,7 +103,7 @@ const useStyles = makeStyles({
   },
   checkboxLabel: {
     color: "#EAEEF6",
-    fontFamily: "Montserrat",
+    fontFamily: "Noto Sans",
     fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 400,

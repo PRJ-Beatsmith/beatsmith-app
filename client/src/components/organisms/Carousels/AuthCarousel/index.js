@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     transform: "translateY(-50%)",
     flexShrink: 0,
     color: "#F6F6F6",
-    fontFamily: "Montserrat",
+    fontFamily: "Noto Sans",
     fontSize: "42px",
     fontStyle: "normal",
     fontWeight: 700,
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   controlleBar: {
     cursor: "pointer",
     textAlign: "center",
-    fontFamily: "Montserrat",
+    fontFamily: "Noto Sans",
     fontSize: "16px",
     fontStyle: "normal",
     fontWeight: 400,

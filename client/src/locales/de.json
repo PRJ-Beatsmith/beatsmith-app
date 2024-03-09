@@ -1,4 +1,9 @@
 {
+  "actions": {
+    "Success": "Erfolg",
+    "Failure": "Fehlschlag",
+    "Scanned image requested please wait before requesting again": "Gescanntes Bild angefordert, bitte warten Sie, bevor Sie erneut anfordern"
+  },
   "Layout": {
     "Auth": {
       "CarouselText1": "Deine Producer alle an einem Ort.",

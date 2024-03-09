@@ -20,7 +20,7 @@ const theme = createTheme({
       main: secondaryColor || "#663399",
     },
     background: {
-      default: "#070911",
+      default: "#0B0D0E",
     },
     success: {
       main: green[500],
@@ -39,7 +39,7 @@ const theme = createTheme({
     divider: grey[600],
   },
   typography: {
-    fontFamily: ["Montserrat", "Satoshi", "Roboto", "sans-serif"].join(","),
+    fontFamily: ["Open Sans", "Noto Sans", "Inter", "sans-serif"].join(","),
     fontSize: 12,
     h1: {
       fontSize: 40,
@@ -126,13 +126,13 @@ const theme = createTheme({
         {
           props: { variant: "body1" },
           style: {
-            fontFamily: "Satoshi",
+            fontFamily: "Noto Sans",
           },
         },
         {
           props: { variant: "body2" },
           style: {
-            fontFamily: "Montserrat",
+            fontFamily: "Inter",
           },
         },
       ],
