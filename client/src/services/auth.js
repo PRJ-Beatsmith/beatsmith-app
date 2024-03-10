@@ -8,10 +8,6 @@ export function loginUser(userData) {
   return http.post("/api/login", userData);
 }
 
-export function setPassword(userData, jwtToken) {
-  return http.post(`/api/register/set-password/${jwtToken}`, userData);
-}
-
 export function changePassword(userData) {
   return http.post(`/api/profile/changePassword`, userData);
 }

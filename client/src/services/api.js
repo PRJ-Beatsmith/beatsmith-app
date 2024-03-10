@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { CONTEXT_PATH } from "utils/constants";
+import { CONTEXT_PATH } from "utils/constant";
 
 // Create a request cancel token
 const CancelToken = Axios.CancelToken;

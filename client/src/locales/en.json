@@ -30,7 +30,7 @@
     "Register": {
       "Step1": {
         "Welcome": "👋 Welcome",
-        "letsStart": "A small step for you, but a big step for your career. Career. Register for free and create your masterpiece. We will guide you step by step through the registration process.",
+        "letsStart": "A small step for you, but a big step for your career. Register for free and create your masterpiece. We will guide you step by step through the registration process.",
         "FirstName": "First Name",
         "LastName": "Last Name",
         "Email": "E-Mail Address",
@@ -47,7 +47,12 @@
         "invalidEmailError": "Please enter a valid e-mail address",
         "under18Error": "You must be at least 16 years old."
       },
-      "Step2": {},
+      "Step2": {
+        "Password": "Password",
+        "PasswordText": "Stealing beats is bad enough, but what about your account? Choose a strong password to avoid data theft.",
+        "yourPassword": "Your Password",
+        "proceed": "Complete registration"
+      },
       "Step3": {},
       "Step4": {}
     },
@@ -67,7 +72,20 @@
       "SuccessSignUp": "Sign up successful! You can now log in.",
       "ErrorSignUp": "Error during sign up. Please try again.",
       "SuccessSignIn": "Sign in successful! Welcome back.",
-      "ErrorSignIn": "Error during sign in. Please check your credentials and try again."
+      "ErrorSignIn": "Error during sign in. Please check your credentials and try again.",
+      "InvalidPasswordError": "Please enter a secure password.",
+      "PasswordTooShort": "The password is too short.",
+      "PasswordLetterError": "The password must contain at least one letter.",
+      "PasswordNumberError": "The password must contain at least one number.",
+      "PasswordSpecialCharError": "The password must contain at least one special character.",
+      "PasswordRequired": "Password is required.",
+      "PasswordGuidelines": "Password Guidelines",
+      "PasswordGuidelinesText": "We have certain password guidelines that you must meet.",
+      "hasUpperCase": "At least 1 uppercase letter",
+      "hasLowerCase": "At least 1 lowercase letter",
+      "hasNumbers": "At least 1 number",
+      "hasSpecialChar": "At least 1 special character",
+      "hasMinLength": "At least 10 characters long"
     }
   }
 }

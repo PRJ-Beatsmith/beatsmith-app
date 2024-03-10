@@ -1,7 +1,7 @@
-export const CONTEXT_PATH = import.meta.env.PUBLIC_URL
-  ? import.meta.env.PUBLIC_URL
+export const CONTEXT_PATH = process.env.PUBLIC_URL
+  ? process.env.PUBLIC_URL
   : "";
-export const API_URL = import.meta.env.REACT_APP_API_URL;
+export const API_URL = process.env.REACT_APP_API_URL;
 export const MY_URL = `${window.location.origin}${process.env.PUBLIC_URL}`;
 export const FILE_URL = `${MY_URL}/api/v2/document/download/`;
 export const AVATAR_URL = `${MY_URL}/api/v2/avatar`;

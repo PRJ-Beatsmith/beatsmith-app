@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { thunk } from "redux-thunk";
+import { thunk as thunkMiddleware } from "redux-thunk";
 import rootReducer from "./reducers";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -13,7 +13,7 @@ const logger = createLogger({
   diff: false,
 });
 
-const middlewares = [thunk];
+const middlewares = [thunkMiddleware];
 
 if (process.env.NODE_ENV === `development`) {
   middlewares.push(logger);

@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
+  Box,
+  Typography,
   InputAdornment,
   TextField,
   IconButton,
   LinearProgress,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
+import { useTranslation } from "react-i18next";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CasinoIcon from "@mui/icons-material/Casino";
 import HttpsIcon from "@mui/icons-material/Https";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 
 const useStyles = makeStyles({
   root: {
@@ -32,6 +37,52 @@ const useStyles = makeStyles({
     width: "100%",
     marginTop: "10px",
   },
+  guidelines: {
+    marginTop: "24px",
+    width: "100%",
+  },
+  icon: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "flex-end",
+  },
+  title1: {
+    fontFamily: "Inter",
+    fontSize: "16px",
+    fontStyle: "normal",
+    fontWeight: 600,
+    lineHeight: "150%",
+    textAlign: "left",
+  },
+  title2: {
+    fontFamily: "Inter",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: 500,
+    lineHeight: "150%",
+    textAlign: "left",
+    paddingBottom: "10px",
+  },
+  validationItem: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "5px",
+  },
+  validIcon: {
+    color: "green",
+    marginRight: "8px",
+  },
+  invalidIcon: {
+    color: "red",
+    marginRight: "8px",
+  },
+  conditionsText: {
+    fontFamily: "Inter",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: 500,
+    lineHeight: "150%",
+  },
 });
 
 const PasswordInput = ({
@@ -39,45 +90,70 @@ const PasswordInput = ({
   showEyeIcon,
   showPasswordStartIcon,
   showProgressBar,
+  showGuidelines,
   value,
   placeholder,
   onChange,
   onStrengthChange,
+  onValidationFail,
   id,
+  autoComplete,
+  fullWidth,
 }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordValidation, setPasswordValidation] = useState({
+    hasUpperCase: false,
+    hasLowerCase: false,
+    hasNumbers: false,
+    hasSpecialChar: false,
+    hasMinLength: false,
+  });
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  const handleMouseDownPassword = (event) => event.preventDefault();
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   const isValidPassword = (password) => {
-    const hasUpperCase = password.match(/[A-Z]/g) || [];
-    const hasLowerCase = password.match(/[a-z]/g) || [];
-    const hasSpecialChar = password.match(/[!@#$%^&*()_+]/g) || [];
+    const hasUpperCase = /[A-Z].*[A-Z]/.test(password);
+    const hasLowerCase = /[a-z].*[a-z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
     return (
-      hasUpperCase.length >= 2 &&
-      hasLowerCase.length >= 2 &&
-      hasSpecialChar.length >= 2 &&
+      hasUpperCase &&
+      hasLowerCase &&
+      hasSpecialChar &&
+      hasNumbers &&
       password.length >= 10
     );
   };
 
-  const generatePassword = () => {
-    let password = "";
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
-    const minLength = 10;
+  const checkValidations = (value) => {
+    setPasswordValidation({
+      hasUpperCase: /[A-Z]/.test(value),
+      hasLowerCase: /[a-z]/.test(value),
+      hasNumbers: /\d/.test(value),
+      hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
+      hasMinLength: value.length >= 10,
+    });
+  };
 
-    while (password.length < minLength || !isValidPassword(password)) {
+  const generatePassword = () => {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(),.?":{}|<>';
+    const minLength = 10;
+    let password = "";
+    let tries = 0;
+
+    while (!isValidPassword(password)) {
+      if (tries > 100) {
+        onValidationFail && onValidationFail();
+        return;
+      }
+
       password = Array.from(
-        { length: 10 },
+        { length: minLength },
         () => characters[Math.floor(Math.random() * characters.length)],
       ).join("");
     }
@@ -87,9 +163,9 @@ const PasswordInput = ({
   const getPasswordStrength = (password) => {
     let strength = 0;
     if (password.length >= 10) strength += 25;
-    if (password.match(/[A-Z]/g)) strength += 25;
-    if (password.match(/[a-z]/g)) strength += 25;
-    if (password.match(/[0-9]/g) || password.match(/[!@#$%^&*()_+]/g))
+    if (/[A-Z]/.test(password)) strength += 25;
+    if (/[a-z]/.test(password)) strength += 25;
+    if (/\d/.test(password) || /[!@#$%^&*(),.?":{}|<>]/.test(password))
       strength += 25;
     return strength;
   };
@@ -106,25 +182,27 @@ const PasswordInput = ({
     }
   };
 
-  const handleChange = (event) => {
-    const { value } = event.target;
-    onChange(event);
-
+  useEffect(() => {
+    checkValidations(value);
     const strength = getPasswordStrength(value);
-    if (onStrengthChange) {
-      onStrengthChange(strength);
-    }
+    onStrengthChange && onStrengthChange(strength);
+  }, [value, onStrengthChange]);
+
+  const handleChange = (event) => {
+    // const { value } = event.target;
+    onChange(event);
   };
 
   return (
     <>
       <TextField
         type={showPassword ? "text" : "password"}
-        fullWidth
         required
+        fullWidth={fullWidth}
         placeholder={placeholder}
         name="password"
         value={value}
+        autoComplete={autoComplete}
         onChange={handleChange}
         className={classes.root}
         id={id}
@@ -171,7 +249,6 @@ const PasswordInput = ({
         <LinearProgress
           variant="determinate"
           value={getPasswordStrength(value)}
-          fullWidth
           className={classes.progressBar}
           sx={{
             width: "100%",
@@ -182,6 +259,34 @@ const PasswordInput = ({
             },
           }}
         />
+      )}
+      {showGuidelines && (
+        <Box className={classes.guidelines}>
+          <Box className={classes.guidelinesTitle}>
+            <Typography className={classes.title1}>
+              {t("Auth.Validate.PasswordGuidelines")}
+            </Typography>
+          </Box>
+          <Box className={classes.guidelinesSubTitle}>
+            <Typography className={classes.title2}>
+              {t("Auth.Validate.PasswordGuidelinesText")}
+            </Typography>
+          </Box>
+          <Box className={classes.guidelinesConditions}>
+            {Object.keys(passwordValidation).map((key) => (
+              <Box key={key} className={classes.validationItem}>
+                {passwordValidation[key] ? (
+                  <CheckIcon className={classes.validIcon} />
+                ) : (
+                  <CloseIcon className={classes.invalidIcon} />
+                )}
+                <Typography className={classes.conditionsText}>
+                  {t(`Auth.Validate.${key}`)}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </Box>
       )}
     </>
   );

@@ -1,15 +1,16 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Box, Typography, FormGroup, CircularProgress } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
+import { submitLogin } from "actions/authActions";
 import CustomInput from "components/atoms/inputs/CustomInput";
 import PasswordInput from "components/atoms/inputs/PasswordInput";
 import FormButton from "components/atoms/Buttons/formButton";
 import CheckboxInput from "components/atoms/inputs/CheckboxInput";
-import { defaultSignIn } from "core/auth";
 
 const useStyles = makeStyles({
   root: {
@@ -115,16 +116,10 @@ const Login = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const submitHandler = async (values) => {
-    const { email, password } = values;
-    try {
-      await defaultSignIn(email, password);
-      toast.success(t("Auth.Validate.SuccessSignIn"));
-      navigate("/");
-    } catch (error) {
-      toast.error(t("Auth.Validate.ErrorSignIn"));
-    }
+  const submitHandler = (values) => {
+    dispatch(submitLogin(values));
   };
 
   return (
@@ -144,9 +139,14 @@ const Login = () => {
         }
         return errors;
       }}
-      onSubmit={async (values, { setSubmitting }) => {
-        await new Promise((r) => setTimeout(r, 500));
-        await submitHandler(values);
+      onSubmit={(values, { setSubmitting }) => {
+        setSubmitting(true);
+        try {
+          submitHandler(values);
+          navigate("/");
+        } catch (error) {
+          toast.error(t("Auth.Validate.ErrorSignIn"));
+        }
         setSubmitting(false);
       }}
     >
@@ -175,6 +175,7 @@ const Login = () => {
                     fullWidth
                     style={{ width: "400px", height: "50px" }}
                     type="email"
+                    autoComplete="current-email"
                     onChange={(event) =>
                       setFieldValue("email", event.target.value)
                     }
@@ -190,6 +191,7 @@ const Login = () => {
                     component={PasswordInput}
                     name="password"
                     id="password"
+                    autoComplete="current-password"
                     onChange={(event) =>
                       setFieldValue("password", event.target.value)
                     }
@@ -228,7 +230,6 @@ const Login = () => {
                 disabled={!dirty}
                 variant="primary"
                 type="submit"
-                onClick={submitHandler}
                 label={t("Auth.Login.signIn")}
               />
               <Typography variant="body2" className={classes.text3}>

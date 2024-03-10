@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Box, Typography, FormGroup, CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -105,6 +105,7 @@ const calculateAge = (birthday) => {
 const StepOne = ({ onNext }) => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const validateSchema = Yup.object().shape({
     email: Yup.string()
@@ -129,54 +130,33 @@ const StepOne = ({ onNext }) => {
       .required(t("Auth.Validate.UsernameRequired")),
   });
 
-  // const handleSubmit = (values, { setSubmitting }) => {
-  //   try {
-  //     setSubmitting(false);
-  //     toast.success(t("Auth.Validate.SuccessSignUp"));
-  //     onNext(values);
-  //   } catch (error) {
-  //     setSubmitting(false);
-  //     toast.error(t("Auth.Validate.ErrorSignUp"));
-  //   }
-  // };
-
   return (
     <Formik
       initialValues={{
         email: "",
         firstName: "",
         lastName: "",
-        birthday: "",
         username: "",
+        birthday: "",
       }}
       validateOnChange={true}
       validationSchema={validateSchema}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
         try {
-          toast.success(t("Auth.Validate.SuccessSignUp"));
           onNext(values);
+          navigate("/step2");
         } catch (error) {
           toast.error(t("Auth.Validate.ErrorSignUp"));
         }
         setSubmitting(false);
       }}
     >
-      {({
-        isSubmitting,
-        errors,
-        touched,
-        dirty,
-        setFieldValue,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isValid,
-      }) => (
+      {({ isSubmitting, errors, touched, dirty, setFieldValue, isValid }) => (
         <>
           {isSubmitting && <CircularProgress style={{ margin: "auto" }} />}
           <Box className={classes.root}>
-            <Form onSubmit={handleSubmit}>
+            <Form>
               <Box className={classes.textBox}>
                 <Typography variant="h4" className={classes.text1}>
                   {t("Auth.Register.Step1.Welcome")}

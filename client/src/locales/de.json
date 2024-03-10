@@ -41,13 +41,18 @@
         "yourEmail": "maxmustermann@example.com",
         "yourBirthday": "TT.MM.JJJJ",
         "yourUsername": "MusterRapper",
-        "proceed": "Jetzt Passwort festlegen",
+        "proceed": "Passwort festlegen",
         "askForLogin": "Du hast schon ein Konto? Hier kannst du dich einloggen.",
         "emptyFieldsError": "Bitte füllen Sie alle Felder aus.",
         "invalidEmailError": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
         "under18Error": "Sie müssen mindestens 16 Jahre alt sein."
       },
-      "Step2": {},
+      "Step2": {
+        "Password": "Passwort",
+        "PasswordText": "Beats klauen ist schlimm genug, aber was ist mit deinem Account? Wähle ein starkes Passwort um den Datendiebstahl zu vermeiden.",
+        "yourPassword": "Dein Passwort",
+        "proceed": "Registrierung abschließen"
+      },
       "Step3": {}
     },
     "Validate": {
@@ -66,7 +71,19 @@
       "SuccessSignUp": "Registrierung erfolgreich! Sie können sich jetzt anmelden.",
       "ErrorSignUp": "Fehler bei der Registrierung. Bitte versuchen Sie es erneut.",
       "SuccessSignIn": "Anmeldung erfolgreich! Willkommen zurück.",
-      "ErrorSignIn": "Fehler bei der Anmeldung. Bitte überprüfen Sie Ihre Anmeldedaten und versuchen Sie es erneut."
+      "ErrorSignIn": "Fehler bei der Anmeldung. Bitte überprüfen Sie Ihre Anmeldedaten und versuchen Sie es erneut.",
+      "InvalidPasswordError": "Bitte geben Sie ein sicheres Passwort ein.",
+      "PasswordTooShort": "Das Passwort ist zu kurz.",
+      "PasswordLetterError": "Das Passwort muss mindestens einen Buchstaben enthalten.",
+      "PasswordNumberError": "Das Passwort muss mindestens eine Zahl enthalten.",
+      "PasswordSpecialCharError": "Das Passwort muss mindestens ein Sonderzeichen enthalten.",
+      "PasswordRequired": "Passwort ist erforderlich.",
+      "PasswordGuidelines": "Passwortrichtlinien",
+      "hasUpperCase": "Mindestens 1 Großbuchstabe",
+      "hasLowerCase": "Mindestens 1 Kleinbuchstabe",
+      "hasNumbers": "Mindestens 1 Zahl",
+      "hasSpecialChar": "Mindestens 1 Sonderzeichen",
+      "hasMinLength": "Mindestens 10 Zeichen lang"
     }
   }
 }
