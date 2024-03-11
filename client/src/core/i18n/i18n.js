@@ -3,8 +3,8 @@ import { initReactI18next } from "react-i18next";
 import HttpApi from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-import EN from "../locales/en.json";
-import DE from "../locales/de.json";
+import EN from "../../locales/en.json";
+import DE from "../../locales/de.json";
 
 const resources = {
   en: { translation: EN },
@@ -47,7 +47,7 @@ const detection = {
   cookieOptions: { path: "/", sameSite: "strict" },
 };
 
-const savedLanguage = localStorage.getItem("i18nextLng") || "en";
+// const savedLanguage = localStorage.getItem("i18nextLng") || "en";
 
 i18n
   .use(HttpApi)
@@ -57,8 +57,8 @@ i18n
     resources,
     detection,
 
-    lng: savedLanguage,
-    fallbackLng: "de",
+    // lng: savedLanguage,
+    fallbackLng: "en",
     debug: true,
 
     interpolation: {

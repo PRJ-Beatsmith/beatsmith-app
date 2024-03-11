@@ -1,7 +1,6 @@
 const socket = require("../Sockets/socketServer");
 // const socketConf = require("../Sockets/serverConfInfra/socket");
 // const applicationSocket = require("../Sockets/applicationSocket");
-// const whiteboardSocket = require("../Sockets/whiteboardSocket");
 // const bcmsSocket = require("../Sockets/bcmsSocket");
 const socketio = require("socket.io");
 
@@ -11,7 +10,7 @@ const socketio = require("socket.io");
  * @param {object} server
  */
 
-const listen = (server) => {
+const listen = server => {
   const io = socketio.listen(server, {
     cors: {
       origin: "*",

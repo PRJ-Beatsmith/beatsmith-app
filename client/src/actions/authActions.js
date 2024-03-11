@@ -3,7 +3,7 @@ import { store } from "react-notifications-component";
 import { notificationOptions } from "components/shared/Config/notificationConfig";
 import * as TYPES from "./types";
 import * as userAuth from "services/auth";
-import { defaultSignUp, defaultSignIn } from "core/auth";
+import { defaultSignUp, defaultSignIn } from "core/firebase/auth";
 
 export const updateSignUpData = (data) => ({
   type: TYPES.UPDATE_SIGNUP_DATA,
