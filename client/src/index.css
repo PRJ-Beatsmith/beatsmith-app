@@ -1,5 +1,18 @@
+@import url("https://session.benova.eu/staticFiles/croppie/croppie.min.css");
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Open Sans", "Noto Sans",
     "Inter", "sans-serif", sans-serif;
   -webkit-font-smoothing: antialiased;

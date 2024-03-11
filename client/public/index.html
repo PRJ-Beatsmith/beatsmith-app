@@ -179,11 +179,16 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
       rel="stylesheet"
     />
+    <script type="text/javascript">
+      function getCookie(cookieName) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${cookieName}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+      }
+    </script>
   </head>
   <body>
-    <noscript>
-      <strong> You need to enable JavaScript to run this app. </strong>
-    </noscript>
+    <noscript> You need to enable JavaScript to run this app. </noscript>
     <div id="root"></div>
   </body>
 </html>
