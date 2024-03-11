@@ -4,6 +4,10 @@
     "Failure": "Fehlschlag",
     "Scanned image requested please wait before requesting again": "Gescanntes Bild angefordert, bitte warten Sie, bevor Sie erneut anfordern"
   },
+  "shared": {
+    "open": "Öffnen",
+    "close": "Schließen"
+  },
   "Layout": {
     "Auth": {
       "CarouselText1": "Deine Producer alle an einem Ort.",
@@ -51,9 +55,19 @@
         "Password": "Passwort",
         "PasswordText": "Beats klauen ist schlimm genug, aber was ist mit deinem Account? Wähle ein starkes Passwort um den Datendiebstahl zu vermeiden.",
         "yourPassword": "Dein Passwort",
-        "proceed": "Registrierung abschließen"
+        "proceed": "Richtlinien zustimmen"
       },
-      "Step3": {}
+      "Step3": {
+        "Terms": "Nutzungsbedingungen",
+        "Policy": "Datenschutzrichtlinien",
+        "Legal": "Rechtliche Hinweise",
+        "MustAgree": "Deine künstlerische Freiheit ist uns wichtig, jedoch ist bei den rechtlichen Bestimmungen deine Zustimmung erforderlich.",
+        "TermsOfService": "Hiermit akzeptiere ich die {link1:Nutzungsbedingungen}.",
+        "PrivacyPolicy": "Ich erkläre mich mit den {link2:Datenschutzrichtlinien} von Beatsmith einverstanden.",
+        "AgePolicy": "Ich bestätige, dass ich mindestens 16 Jahre alt bin oder die Einwilligung eines Erziehungsberechtigten zur Nutzung von Beatsmith vorliegt.",
+        "AllAgree": "Ich akzeptiere alle oben genannten Bedingungen.",
+        "proceed": "Registrierung abschließen"
+      }
     },
     "Validate": {
       "InvalidEmailError": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",

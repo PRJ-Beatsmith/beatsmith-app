@@ -1,0 +1,1 @@
+export { PolicyModal } from "./PolicyModal";

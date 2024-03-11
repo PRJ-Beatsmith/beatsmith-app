@@ -12,11 +12,15 @@ const useStyles = makeStyles((theme) => ({
   },
   checkboxLabel: {
     color: "#EAEEF6",
+    display: "flex",
+    alignItems: "flex-start",
+    textAlign: "left",
     fontFamily: "Noto Sans",
     fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 400,
     lineHeight: "100%",
+    maxWidth: "330px",
   },
 }));
 
@@ -39,11 +43,7 @@ const CheckboxInput = ({ label, variant, onChange, defaultChecked, id }) => {
           }}
         />
       }
-      label={
-        <Typography variant="body2" className={classes.checkboxLabel}>
-          {label}
-        </Typography>
-      }
+      label={<Typography className={classes.checkboxLabel}>{label}</Typography>}
       id={id}
       variant={variant}
       className={classes.checkbox}

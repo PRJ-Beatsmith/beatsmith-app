@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Box, Typography, FormGroup, CircularProgress } from "@mui/material";
@@ -118,6 +118,13 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const handlePasswordChange = useCallback(
+    (field, setFieldValue) => (event) => {
+      setFieldValue(field, event.target.value);
+    },
+    [],
+  );
+
   const submitHandler = (values) => {
     dispatch(submitLogin(values));
   };
@@ -188,16 +195,27 @@ const Login = () => {
                     {t("Auth.Login.Password")}
                   </label>
                   <Field
-                    component={PasswordInput}
+                    component={({ field, form, ...props }) => (
+                      <PasswordInput
+                        {...field}
+                        {...props}
+                        onChange={handlePasswordChange(
+                          field.name,
+                          form.setFieldValue,
+                        )}
+                        value={field.value}
+                        fullWidth={true}
+                        showEyeIcon={true}
+                        showPasswordStartIcon={true}
+                      />
+                    )}
                     name="password"
                     id="password"
                     autoComplete="current-password"
-                    onChange={(event) =>
-                      setFieldValue("password", event.target.value)
-                    }
+                    // onChange={(event) =>
+                    //   setFieldValue("password", event.target.value)
+                    // }
                     placeholder={t("Auth.Login.yourPassword")}
-                    showEyeIcon={true}
-                    showPasswordStartIcon={true}
                   />
                   <Box className={classes.passwordOptions}>
                     <Field
@@ -211,7 +229,7 @@ const Login = () => {
                       variant="body2"
                       defaultChecked={true}
                       label={t("Auth.Login.rememberPassword")}
-                      autoComplete="current-password"
+                      autoComplete="remember-account"
                     />
                     <Typography variant="body2" className={classes.text3}>
                       <Link

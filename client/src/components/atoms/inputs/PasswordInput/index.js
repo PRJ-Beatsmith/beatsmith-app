@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import {
   Box,
   Typography,
@@ -85,211 +85,215 @@ const useStyles = makeStyles({
   },
 });
 
-const PasswordInput = ({
-  showCubeIcon,
-  showEyeIcon,
-  showPasswordStartIcon,
-  showProgressBar,
-  showGuidelines,
-  value,
-  placeholder,
-  onChange,
-  onStrengthChange,
-  onValidationFail,
-  id,
-  autoComplete,
-  fullWidth,
-}) => {
-  const classes = useStyles();
-  const { t } = useTranslation();
+const PasswordInput = memo(
+  ({
+    showCubeIcon,
+    showEyeIcon,
+    showPasswordStartIcon,
+    showProgressBar,
+    showGuidelines,
+    value,
+    placeholder,
+    onChange,
+    onStrengthChange,
+    onValidationFail,
+    id,
+    autoComplete,
+    fullWidth,
+  }) => {
+    const classes = useStyles();
+    const { t } = useTranslation();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [passwordValidation, setPasswordValidation] = useState({
-    hasUpperCase: false,
-    hasLowerCase: false,
-    hasNumbers: false,
-    hasSpecialChar: false,
-    hasMinLength: false,
-  });
-
-  const handleMouseDownPassword = (event) => event.preventDefault();
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-
-  const isValidPassword = (password) => {
-    const hasUpperCase = /[A-Z].*[A-Z]/.test(password);
-    const hasLowerCase = /[a-z].*[a-z]/.test(password);
-    const hasNumbers = /\d/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    return (
-      hasUpperCase &&
-      hasLowerCase &&
-      hasSpecialChar &&
-      hasNumbers &&
-      password.length >= 10
-    );
-  };
-
-  const checkValidations = (value) => {
-    setPasswordValidation({
-      hasUpperCase: /[A-Z]/.test(value),
-      hasLowerCase: /[a-z]/.test(value),
-      hasNumbers: /\d/.test(value),
-      hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
-      hasMinLength: value.length >= 10,
+    const [showPassword, setShowPassword] = useState(false);
+    const [passwordValidation, setPasswordValidation] = useState({
+      hasUpperCase: false,
+      hasLowerCase: false,
+      hasNumbers: false,
+      hasSpecialChar: false,
+      hasMinLength: false,
     });
-  };
 
-  const generatePassword = () => {
-    const characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(),.?":{}|<>';
-    const minLength = 10;
-    let password = "";
-    let tries = 0;
+    const handleMouseDownPassword = (event) => event.preventDefault();
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
 
-    while (!isValidPassword(password)) {
-      if (tries > 100) {
-        onValidationFail && onValidationFail();
-        return;
+    const isValidPassword = (password) => {
+      const hasUpperCase = /[A-Z].*[A-Z]/.test(password);
+      const hasLowerCase = /[a-z].*[a-z]/.test(password);
+      const hasNumbers = /\d/.test(password);
+      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+      return (
+        hasUpperCase &&
+        hasLowerCase &&
+        hasSpecialChar &&
+        hasNumbers &&
+        password.length >= 10
+      );
+    };
+
+    const checkValidations = (value) => {
+      setPasswordValidation({
+        hasUpperCase: /[A-Z]/.test(value),
+        hasLowerCase: /[a-z]/.test(value),
+        hasNumbers: /\d/.test(value),
+        hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
+        hasMinLength: value.length >= 10,
+      });
+    };
+
+    const generatePassword = () => {
+      const characters =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(),.?":{}|<>';
+      const minLength = 10;
+      let password = "";
+      let tries = 0;
+
+      while (!isValidPassword(password)) {
+        if (tries > 100) {
+          onValidationFail && onValidationFail();
+          return;
+        }
+
+        password = Array.from(
+          { length: minLength },
+          () => characters[Math.floor(Math.random() * characters.length)],
+        ).join("");
       }
+      onChange({ target: { value: password } });
+    };
 
-      password = Array.from(
-        { length: minLength },
-        () => characters[Math.floor(Math.random() * characters.length)],
-      ).join("");
-    }
-    onChange({ target: { value: password } });
-  };
+    const getPasswordStrength = (password) => {
+      let strength = 0;
+      if (password.length >= 10) strength += 25;
+      if (/[A-Z]/.test(password)) strength += 25;
+      if (/[a-z]/.test(password)) strength += 25;
+      if (/\d/.test(password) || /[!@#$%^&*(),.?":{}|<>]/.test(password))
+        strength += 25;
+      return strength;
+    };
 
-  const getPasswordStrength = (password) => {
-    let strength = 0;
-    if (password.length >= 10) strength += 25;
-    if (/[A-Z]/.test(password)) strength += 25;
-    if (/[a-z]/.test(password)) strength += 25;
-    if (/\d/.test(password) || /[!@#$%^&*(),.?":{}|<>]/.test(password))
-      strength += 25;
-    return strength;
-  };
+    const getProgressBarColor = (strength) => {
+      if (strength < 50) {
+        return "#FF0000";
+      } else if (strength < 75) {
+        return "#FF8800";
+      } else if (strength < 100) {
+        return "#FFA500";
+      } else {
+        return "#008000";
+      }
+    };
 
-  const getProgressBarColor = (strength) => {
-    if (strength < 50) {
-      return "#FF0000";
-    } else if (strength < 75) {
-      return "#FF8800";
-    } else if (strength < 100) {
-      return "#FFA500";
-    } else {
-      return "#008000";
-    }
-  };
+    useEffect(() => {
+      checkValidations(value);
+      const strength = getPasswordStrength(value);
+      onStrengthChange && onStrengthChange(strength);
+    }, [value, onStrengthChange]);
 
-  useEffect(() => {
-    checkValidations(value);
-    const strength = getPasswordStrength(value);
-    onStrengthChange && onStrengthChange(strength);
-  }, [value, onStrengthChange]);
+    const handleChange = (event) => {
+      // const { value } = event.target;
+      onChange(event);
+    };
 
-  const handleChange = (event) => {
-    // const { value } = event.target;
-    onChange(event);
-  };
-
-  return (
-    <>
-      <TextField
-        type={showPassword ? "text" : "password"}
-        required
-        fullWidth={fullWidth}
-        placeholder={placeholder}
-        name="password"
-        value={value}
-        autoComplete={autoComplete}
-        onChange={handleChange}
-        className={classes.root}
-        id={id}
-        sx={{
-          "&:hover .MuiOutlinedInput-notchedOutline": {
-            border: "none",
-          },
-          "& .MuiOutlinedInput-root": {
-            "& fieldset": {
+    return (
+      <>
+        <TextField
+          type={showPassword ? "text" : "password"}
+          required
+          fullWidth={fullWidth}
+          placeholder={placeholder}
+          name="password"
+          value={value}
+          autoComplete={autoComplete}
+          onChange={handleChange}
+          className={classes.root}
+          id={id}
+          sx={{
+            "&:hover .MuiOutlinedInput-notchedOutline": {
               border: "none",
             },
-            "&.Mui-focused fieldset": {
-              border: "2px solid #EC4E49",
-            },
-          },
-        }}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              {showPasswordStartIcon && <HttpsIcon />}
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment position="end">
-              {showCubeIcon && (
-                <IconButton onClick={generatePassword}>
-                  <CasinoIcon />
-                </IconButton>
-              )}
-              {showEyeIcon && (
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              )}
-            </InputAdornment>
-          ),
-        }}
-      />
-      {showProgressBar && (
-        <LinearProgress
-          variant="determinate"
-          value={getPasswordStrength(value)}
-          className={classes.progressBar}
-          sx={{
-            width: "100%",
-            borderRadius: "6px",
-            marginTop: "10px",
-            "& .MuiLinearProgress-bar": {
-              backgroundColor: getProgressBarColor(getPasswordStrength(value)),
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                border: "none",
+              },
+              "&.Mui-focused fieldset": {
+                border: "2px solid #EC4E49",
+              },
             },
           }}
-        />
-      )}
-      {showGuidelines && (
-        <Box className={classes.guidelines}>
-          <Box className={classes.guidelinesTitle}>
-            <Typography className={classes.title1}>
-              {t("Auth.Validate.PasswordGuidelines")}
-            </Typography>
-          </Box>
-          <Box className={classes.guidelinesSubTitle}>
-            <Typography className={classes.title2}>
-              {t("Auth.Validate.PasswordGuidelinesText")}
-            </Typography>
-          </Box>
-          <Box className={classes.guidelinesConditions}>
-            {Object.keys(passwordValidation).map((key) => (
-              <Box key={key} className={classes.validationItem}>
-                {passwordValidation[key] ? (
-                  <CheckIcon className={classes.validIcon} />
-                ) : (
-                  <CloseIcon className={classes.invalidIcon} />
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                {showPasswordStartIcon && <HttpsIcon />}
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="end">
+                {showCubeIcon && (
+                  <IconButton onClick={generatePassword}>
+                    <CasinoIcon />
+                  </IconButton>
                 )}
-                <Typography className={classes.conditionsText}>
-                  {t(`Auth.Validate.${key}`)}
-                </Typography>
-              </Box>
-            ))}
+                {showEyeIcon && (
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                )}
+              </InputAdornment>
+            ),
+          }}
+        />
+        {showProgressBar && (
+          <LinearProgress
+            variant="determinate"
+            value={getPasswordStrength(value)}
+            className={classes.progressBar}
+            sx={{
+              width: "100%",
+              borderRadius: "6px",
+              marginTop: "10px",
+              "& .MuiLinearProgress-bar": {
+                backgroundColor: getProgressBarColor(
+                  getPasswordStrength(value),
+                ),
+              },
+            }}
+          />
+        )}
+        {showGuidelines && (
+          <Box className={classes.guidelines}>
+            <Box className={classes.guidelinesTitle}>
+              <Typography className={classes.title1}>
+                {t("Auth.Validate.PasswordGuidelines")}
+              </Typography>
+            </Box>
+            <Box className={classes.guidelinesSubTitle}>
+              <Typography className={classes.title2}>
+                {t("Auth.Validate.PasswordGuidelinesText")}
+              </Typography>
+            </Box>
+            <Box className={classes.guidelinesConditions}>
+              {Object.keys(passwordValidation).map((key) => (
+                <Box key={key} className={classes.validationItem}>
+                  {passwordValidation[key] ? (
+                    <CheckIcon className={classes.validIcon} />
+                  ) : (
+                    <CloseIcon className={classes.invalidIcon} />
+                  )}
+                  <Typography className={classes.conditionsText}>
+                    {t(`Auth.Validate.${key}`)}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
           </Box>
-        </Box>
-      )}
-    </>
-  );
-};
+        )}
+      </>
+    );
+  },
+);
 
 export default PasswordInput;

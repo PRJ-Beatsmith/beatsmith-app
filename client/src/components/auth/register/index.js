@@ -1,8 +1,9 @@
-import React, { Suspense } from "react";
+import React, { useState, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, CircularProgress } from "@mui/material";
 import { useSignUp } from "utils/contexts/signUpContext";
+import { PolicyModal } from "components/organisms/Modals";
 
 const StepOne = React.lazy(() => import("./StepOne"));
 const StepTwo = React.lazy(() => import("./StepTwo"));
@@ -21,21 +22,22 @@ const Register = () => {
   const classes = useStyles();
   const { updateSignUpData, submitRegistrationData } = useSignUp();
 
-  // const [registrationData, setRegistrationData] = useState({
-  //   firstName: "",
-  //   lastName: "",
-  //   username: "",
-  //   email: "",
-  //   password: "",
-  //   birthday: "",
-  //   allAgreementsAccepted: false,
-  //   termsOfUse: false,
-  //   agePolicy: false,
-  //   privacyPolicy: false,
-  // });
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalContent, setModalContent] = useState("");
 
   const handleNext = (data) => {
     updateSignUpData(data);
+  };
+
+  const handleModalOpen = (title, content) => {
+    setModalTitle(title);
+    setModalContent(content);
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -46,7 +48,13 @@ const Register = () => {
           <Route path="/step2" element={<StepTwo onNext={handleNext} />} />
           <Route
             path="/step3"
-            element={<StepThree onNext={submitRegistrationData} />}
+            element={
+              <StepThree
+                onNext={submitRegistrationData}
+                onOpenModal={handleModalOpen}
+                onCloseModal={handleModalClose}
+              />
+            }
           />
           <Route
             path="*"
@@ -54,6 +62,12 @@ const Register = () => {
           />
         </Routes>
       </Suspense>
+      <PolicyModal
+        open={modalOpen}
+        onClose={handleModalClose}
+        buttonText={modalContent}
+        children={modalTitle}
+      />
     </Box>
   );
 };
