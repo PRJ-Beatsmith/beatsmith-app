@@ -65,8 +65,8 @@ const Register = () => {
       <PolicyModal
         open={modalOpen}
         onClose={handleModalClose}
-        buttonText={modalContent}
-        children={modalTitle}
+        modalContent={modalContent}
+        modalTitle={modalTitle}
       />
     </Box>
   );

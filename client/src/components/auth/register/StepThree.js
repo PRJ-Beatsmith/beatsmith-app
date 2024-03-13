@@ -109,7 +109,7 @@ const StepThree = ({ onNext, onOpenModal, onCloseModal }) => {
           <Fragment key={index}>
             {" "}
             <span
-              onClick={() => onOpenModal("terms")}
+              onClick={() => onOpenModal(t("Auth.Register.Step3.Terms"))}
               className={classes.text3}
             >
               {t("Auth.Register.Step3.Terms")}
@@ -121,7 +121,9 @@ const StepThree = ({ onNext, onOpenModal, onCloseModal }) => {
           <Fragment key={index}>
             {" "}
             <span
-              onClick={() => onOpenModal("privacy")}
+              onClick={() =>
+                onOpenModal(t("Auth.Register.Step3.Policy"), "hello")
+              }
               className={classes.text3}
             >
               {t("Auth.Register.Step3.Policy")}
