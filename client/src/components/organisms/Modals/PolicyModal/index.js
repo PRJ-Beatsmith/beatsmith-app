@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import {
-  Button,
   IconButton,
   Typography,
   Box,
@@ -9,7 +8,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  useMediaQuery,
+  // useMediaQuery,
 } from "@mui/material";
 import { appScrollBar } from "utils/cssUtils";
 import CloseIcon from "@mui/icons-material/Close";
@@ -75,11 +74,11 @@ export const PolicyModal = memo(
     open = true,
     buttonText = "",
     onClose,
-    modalTitle,
-    modalContent,
+    modalTitle = "",
+    modalContent = "",
     ...other
   }) => {
-    const isMobileView = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+    // const isMobileView = useMediaQuery((theme) => theme.breakpoints.down("sm"));
     const classes = useStyles();
     const { t } = useTranslation();
 
