@@ -121,6 +121,7 @@ const PasswordInput = memo(
       const hasLowerCase = /[a-z].*[a-z]/.test(password);
       const hasNumbers = /\d/.test(password);
       const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+      console.log("password", password);
       return (
         hasUpperCase &&
         hasLowerCase &&
@@ -130,14 +131,15 @@ const PasswordInput = memo(
       );
     };
 
-    const checkValidations = (value) => {
+    const checkValidations = (password) => {
       setPasswordValidation({
-        hasUpperCase: /[A-Z]/.test(value),
-        hasLowerCase: /[a-z]/.test(value),
-        hasNumbers: /\d/.test(value),
-        hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
-        hasMinLength: value.length >= 10,
+        hasUpperCase: /[A-Z]/?.test(password),
+        hasLowerCase: /[a-z]/?.test(password),
+        hasNumbers: /\d/?.test(password),
+        hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/?.test(password),
+        hasMinLength: password?.length >= 10,
       });
+      console.log("value22222", password);
     };
 
     const generatePassword = () => {
@@ -155,19 +157,24 @@ const PasswordInput = memo(
 
         password = Array.from(
           { length: minLength },
-          () => characters[Math.floor(Math.random() * characters.length)],
+          () => characters[Math.floor(Math.random() * characters?.length)],
         ).join("");
       }
       onChange({ target: { value: password } });
     };
 
     const getPasswordStrength = (password) => {
+      if (!password) {
+        return 0;
+      }
       let strength = 0;
-      if (password.length >= 10) strength += 25;
+      if (password?.length >= 10) strength += 25;
       if (/[A-Z]/.test(password)) strength += 25;
       if (/[a-z]/.test(password)) strength += 25;
       if (/\d/.test(password) || /[!@#$%^&*(),.?":{}|<>]/.test(password))
         strength += 25;
+      console.log("strength1", password);
+      console.log("strength3", strength);
       return strength;
     };
 
@@ -185,14 +192,19 @@ const PasswordInput = memo(
 
     useEffect(() => {
       checkValidations(value);
+
       const strength = getPasswordStrength(value);
+
       onStrengthChange && onStrengthChange(strength);
+
+      console.log("strength", strength);
     }, [value, onStrengthChange]);
 
-    const handleChange = (event) => {
-      // const { value } = event.target;
-      onChange(event);
-    };
+    // const handleChange = (event) => {
+    //   // const { value } = event.target;
+    //   onChange(event);
+    //   console.log("value", event);
+    // };
 
     return (
       <>
@@ -204,7 +216,7 @@ const PasswordInput = memo(
           name="password"
           value={value}
           autoComplete={autoComplete}
-          onChange={handleChange}
+          onChange={onChange}
           className={classes.root}
           id={id}
           sx={{

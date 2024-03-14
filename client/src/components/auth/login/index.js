@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Box, Typography, FormGroup, CircularProgress } from "@mui/material";
@@ -118,17 +118,6 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handlePasswordChange = useCallback(
-    (field, setFieldValue) => (event) => {
-      setFieldValue(field, event.target.value);
-    },
-    [],
-  );
-
-  const submitHandler = (values) => {
-    dispatch(submitLogin(values));
-  };
-
   return (
     <Formik
       initialValues={{ email: "", password: "", rememberPassword: true }}
@@ -148,13 +137,16 @@ const Login = () => {
       }}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
-        try {
-          submitHandler(values);
-          navigate("/");
-        } catch (error) {
-          toast.error(t("Auth.Validate.ErrorSignIn"));
-        }
-        setSubmitting(false);
+        dispatch(submitLogin(values))
+          .then(() => {
+            navigate("/");
+          })
+          .catch(() => {
+            toast.error(t("Auth.Validate.ErrorSignIn"));
+          })
+          .finally(() => {
+            setSubmitting(false);
+          });
       }}
     >
       {({ isSubmitting, dirty, setFieldValue }) => (
@@ -195,27 +187,17 @@ const Login = () => {
                     {t("Auth.Login.Password")}
                   </label>
                   <Field
-                    component={({ field, form, ...props }) => (
-                      <PasswordInput
-                        {...field}
-                        {...props}
-                        onChange={handlePasswordChange(
-                          field.name,
-                          form.setFieldValue,
-                        )}
-                        value={field.value}
-                        fullWidth={true}
-                        showEyeIcon={true}
-                        showPasswordStartIcon={true}
-                      />
-                    )}
+                    component={PasswordInput}
                     name="password"
                     id="password"
                     autoComplete="current-password"
-                    // onChange={(event) =>
-                    //   setFieldValue("password", event.target.value)
-                    // }
+                    onChange={(event) =>
+                      setFieldValue("password", event.target.value)
+                    }
                     placeholder={t("Auth.Login.yourPassword")}
+                    showPasswordStartIcon={true}
+                    showEyeIcon={true}
+                    fullWidth
                   />
                   <Box className={classes.passwordOptions}>
                     <Field

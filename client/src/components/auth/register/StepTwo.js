@@ -97,7 +97,15 @@ const StepTwo = ({ onNext }) => {
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, errors, touched, dirty, setFieldValue, isValid }) => (
+      {({
+        isSubmitting,
+        values,
+        errors,
+        touched,
+        dirty,
+        setFieldValue,
+        isValid,
+      }) => (
         <>
           {isSubmitting && <CircularProgress style={{ margin: "auto" }} />}
           <Box className={classes.root}>
@@ -117,21 +125,7 @@ const StepTwo = ({ onNext }) => {
                       {t("Auth.Register.Step2.Password")}
                     </label>
                     <Field
-                      component={({ field, form, ...props }) => (
-                        <PasswordInput
-                          {...field}
-                          {...props}
-                          onChange={(event) => {
-                            form.setFieldValue(field.name, event.target.value);
-                            if (props.onChange) props.onChange(event);
-                          }}
-                          value={field.value}
-                          showCubeIcon={true}
-                          showProgressBar={true}
-                          fullWidth={true}
-                          showGuidelines={true}
-                        />
-                      )}
+                      component={PasswordInput}
                       name="password"
                       id="password"
                       style={{ width: "440px", height: "50px" }}
@@ -142,12 +136,17 @@ const StepTwo = ({ onNext }) => {
                       }
                       showEyeIcon={true}
                       showPasswordStartIcon={true}
+                      showCubeIcon={true}
+                      showProgressBar={true}
+                      fullWidth={true}
+                      showGuidelines={true}
                     />
                     {touched.password && errors.password && (
                       <Typography variant="h4" style={{ color: "red" }}>
                         {errors.password}
                       </Typography>
                     )}
+                    {JSON.stringify(values.password, null, 2)}
                   </FormGroup>
                 </Box>
               </Box>

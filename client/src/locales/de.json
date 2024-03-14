@@ -10,11 +10,11 @@
   },
   "Layout": {
     "Auth": {
-      "CarouselText1": "Deine Producer alle an einem Ort.",
-      "CarouselText2": "Deine Ghostwriter alle an einem Ort.",
-      "CarouselText3": "Deine Rapper alle an einem Ort.",
-      "CarouselText4": "Deine Beats alle an einem Ort.",
-      "CarouselText5": "Deine Samples alle an einem Ort."
+      "CarouselText1": "Alle deine Producer an einem Ort.",
+      "CarouselText2": "Alle deine Ghostwriter an einem Ort.",
+      "CarouselText3": "Alle deine Rapper an einem Ort.",
+      "CarouselText4": "Alle deine Beats an einem Ort.",
+      "CarouselText5": "Alle deine Samples an einem Ort."
     }
   },
   "Auth": {
@@ -93,6 +93,7 @@
       "PasswordSpecialCharError": "Das Passwort muss mindestens ein Sonderzeichen enthalten.",
       "PasswordRequired": "Passwort ist erforderlich.",
       "PasswordGuidelines": "Passwortrichtlinien",
+      "PasswordGuidelinesText": "Wir haben bestimmte Passwortrichtlinien, die Sie einhalten müssen.",
       "hasUpperCase": "Mindestens 1 Großbuchstabe",
       "hasLowerCase": "Mindestens 1 Kleinbuchstabe",
       "hasNumbers": "Mindestens 1 Zahl",
