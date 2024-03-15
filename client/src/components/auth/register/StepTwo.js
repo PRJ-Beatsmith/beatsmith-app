@@ -1,10 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useNavigate } from "react-router-dom";
 import { Box, Typography, FormGroup, CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import PasswordInput from "components/atoms/inputs/PasswordInput";
 import FormButton from "components/atoms/Buttons/formButton";
@@ -70,7 +69,6 @@ const useStyles = makeStyles({
 const StepTwo = ({ onNext }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   const validateSchema = Yup.object().shape({
     password: Yup.string()
@@ -89,8 +87,11 @@ const StepTwo = ({ onNext }) => {
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
         try {
+          values = {
+            ...values,
+            onboardingStep: 3,
+          };
           onNext(values);
-          navigate("/step3");
         } catch (error) {
           toast.error(t("Auth.Validate.ErrorSignUp"));
         }
@@ -124,16 +125,16 @@ const StepTwo = ({ onNext }) => {
                     <label className={classes.label} htmlFor="password">
                       {t("Auth.Register.Step2.Password")}
                     </label>
-                    <Field
-                      component={PasswordInput}
+                    <PasswordInput
                       name="password"
                       id="password"
+                      value={values.password}
                       style={{ width: "440px", height: "50px" }}
                       placeholder={t("Auth.Register.Step2.yourPassword")}
                       autoComplete="new-password"
-                      onChange={(event) =>
-                        setFieldValue("password", event.target.value)
-                      }
+                      onChange={(event) => {
+                        setFieldValue("password", event.target.value);
+                      }}
                       showEyeIcon={true}
                       showPasswordStartIcon={true}
                       showCubeIcon={true}
@@ -141,12 +142,6 @@ const StepTwo = ({ onNext }) => {
                       fullWidth={true}
                       showGuidelines={true}
                     />
-                    {touched.password && errors.password && (
-                      <Typography variant="h4" style={{ color: "red" }}>
-                        {errors.password}
-                      </Typography>
-                    )}
-                    {JSON.stringify(values.password, null, 2)}
                   </FormGroup>
                 </Box>
               </Box>

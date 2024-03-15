@@ -78,7 +78,7 @@ function AuthLayout() {
         <Box className={classes.right}>
           <Suspense fallback={<CircularProgress />}>
             <Routes location={location} key={location.pathname}>
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" index element={<Login />} />
               <Route path="/register/*" element={<Register />} />
             </Routes>
           </Suspense>

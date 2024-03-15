@@ -1,7 +1,19 @@
 import * as TYPES from "actions/types";
 
 const initialState = {
-  signUpData: {},
+  signUpData: {
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    password: "",
+    birthday: "",
+    allAgreementsAccepted: false,
+    termsOfUse: false,
+    agePolicy: false,
+    privacyPolicy: false,
+    onboardingStep: 1,
+  },
   socket: null,
   isAuthenticated: false,
   user: {},

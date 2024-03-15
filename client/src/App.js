@@ -10,8 +10,6 @@ import { CssBaseline } from "@mui/material";
 import "./App.scss";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { AuthProvider } from "utils/contexts/authContexts";
-import { SignUpProvider } from "utils/contexts/signUpContext";
 import * as AppInitializerService from "./AppInitializer";
 
 class App extends Component {
@@ -24,18 +22,14 @@ class App extends Component {
       <Fragment>
         <DndProvider backend={HTML5Backend}>
           <ToastContainer />
-          <AuthProvider>
-            <SignUpProvider>
-              <Router history={history}>
-                <ThemeProvider theme={theme}>
-                  <CssBaseline />
-                  <div className="App" id="App">
-                    <AppRoutes />
-                  </div>
-                </ThemeProvider>
-              </Router>
-            </SignUpProvider>
-          </AuthProvider>
+          <Router history={history}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <div className="App" id="App">
+                <AppRoutes />
+              </div>
+            </ThemeProvider>
+          </Router>
         </DndProvider>
       </Fragment>
     );

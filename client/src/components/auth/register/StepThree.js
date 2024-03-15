@@ -142,7 +142,6 @@ const StepThree = ({ onNext, onOpenModal, onCloseModal }) => {
         termsOfUse: false,
         privacyPolicy: false,
         agePolicy: false,
-        allAgreementsAccepted: false,
       }}
       validateOnChange={true}
       validationSchema={validateSchema}
@@ -157,7 +156,7 @@ const StepThree = ({ onNext, onOpenModal, onCloseModal }) => {
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, errors, touched, dirty, setFieldValue, isValid }) => (
+      {({ isSubmitting, dirty, setFieldValue, isValid, values }) => (
         <>
           {isSubmitting && <CircularProgress />}
           <Box className={classes.root}>
@@ -178,11 +177,12 @@ const StepThree = ({ onNext, onOpenModal, onCloseModal }) => {
                       type="checkbox"
                       name="termsOfUse"
                       id="termsOfUse"
+                      checked={values.termsOfUse}
                       onChange={(event) =>
                         setFieldValue("termsOfUse", event.target.checked)
                       }
                       variant="body2"
-                      defaultChecked={true}
+                      defaultChecked={values.termsOfUse}
                       label={renderTextWithLinks(
                         t("Auth.Register.Step3.TermsOfService"),
                       )}
@@ -195,11 +195,12 @@ const StepThree = ({ onNext, onOpenModal, onCloseModal }) => {
                       type="checkbox"
                       name="privacyPolicy"
                       id="privacyPolicy"
+                      checked={values.privacyPolicy}
                       onChange={(event) =>
                         setFieldValue("privacyPolicy", event.target.checked)
                       }
                       variant="body2"
-                      defaultChecked={true}
+                      defaultChecked={values.privacyPolicy}
                       label={renderTextWithLinks(
                         t("Auth.Register.Step3.PrivacyPolicy"),
                       )}
@@ -212,9 +213,11 @@ const StepThree = ({ onNext, onOpenModal, onCloseModal }) => {
                       type="checkbox"
                       name="agePolicy"
                       id="agePolicy"
+                      checked={values.agePolicy}
                       onChange={(event) =>
                         setFieldValue("agePolicy", event.target.checked)
                       }
+                      defaultChecked={values.agePolicy}
                       variant="body2"
                       label={t("Auth.Register.Step3.AgePolicy")}
                       autoComplete="agePolicy"
@@ -230,15 +233,28 @@ const StepThree = ({ onNext, onOpenModal, onCloseModal }) => {
                       component={CheckboxInput}
                       type="checkbox"
                       name="allAgreementsAccepted"
-                      id="allAgreementsAccepted"
-                      onChange={(event) =>
-                        setFieldValue(
-                          "allAgreementsAccepted",
-                          event.target.checked,
-                        )
-                      }
                       variant="body2"
-                      defaultChecked={true}
+                      onChange={({ target }) => {
+                        if (target.checked) {
+                          setFieldValue("agePolicy", true);
+                          setFieldValue("privacyPolicy", true);
+                          setFieldValue("termsOfUse", true);
+                        } else {
+                          setFieldValue("agePolicy", false);
+                          setFieldValue("privacyPolicy", false);
+                          setFieldValue("termsOfUse", false);
+                        }
+                      }}
+                      checked={
+                        values.agePolicy &&
+                        values.privacyPolicy &&
+                        values.termsOfUse
+                      }
+                      defaultChecked={
+                        values.agePolicy &&
+                        values.privacyPolicy &&
+                        values.termsOfUse
+                      }
                       label={t("Auth.Register.Step3.AllAgree")}
                       autoComplete="allAgreementsAccepted"
                     />

@@ -24,13 +24,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CheckboxInput = ({ label, variant, onChange, defaultChecked, id }) => {
+const CheckboxInput = ({
+  label,
+  variant,
+  onChange,
+  defaultChecked,
+  checked,
+  id,
+}) => {
   const classes = useStyles();
 
   return (
     <FormControlLabel
       control={
         <Checkbox
+          checked={checked}
           defaultChecked={defaultChecked}
           onChange={onChange}
           sx={{

@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Box, Typography, FormGroup, CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -105,7 +105,6 @@ const calculateAge = (birthday) => {
 const StepOne = ({ onNext }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   const validateSchema = Yup.object().shape({
     email: Yup.string()
@@ -144,8 +143,11 @@ const StepOne = ({ onNext }) => {
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
         try {
+          values = {
+            ...values,
+            onboardingStep: 2,
+          };
           onNext(values);
-          navigate("/step2");
         } catch (error) {
           toast.error(t("Auth.Validate.ErrorSignUp"));
         }

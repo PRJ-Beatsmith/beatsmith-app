@@ -39,7 +39,7 @@ const theme = createTheme({
     divider: grey[600],
   },
   typography: {
-    fontFamily: ["Open Sans", "Noto Sans", "Inter", "sans-serif"].join(","),
+    // fontFamily: ["Open Sans", "Noto Sans", "Inter", "sans-serif"].join(","),
     fontSize: 12,
     h1: {
       fontSize: 40,

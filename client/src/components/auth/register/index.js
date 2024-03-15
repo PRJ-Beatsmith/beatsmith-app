@@ -1,9 +1,10 @@
-import React, { useState, Suspense } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useState, Suspense, useEffect } from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, CircularProgress } from "@mui/material";
-import { useSignUp } from "utils/contexts/signUpContext";
 import { PolicyModal } from "components/organisms/Modals";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSignUpData } from "actions/authActions";
 
 const StepOne = React.lazy(() => import("./StepOne"));
 const StepTwo = React.lazy(() => import("./StepTwo"));
@@ -20,14 +21,20 @@ const useStyles = makeStyles({
 
 const Register = () => {
   const classes = useStyles();
-  const { updateSignUpData, submitRegistrationData } = useSignUp();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalContent, setModalContent] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const signUpData = useSelector((state) => state.auth.signUpData);
 
   const handleNext = (data) => {
-    updateSignUpData(data);
+    dispatch(updateSignUpData(data));
+  };
+
+  const submitRegistrationData = () => {
+    alert(JSON.stringify(signUpData));
   };
 
   const handleModalOpen = (title, content) => {
@@ -39,6 +46,10 @@ const Register = () => {
   const handleModalClose = () => {
     setModalOpen(false);
   };
+
+  useEffect(() => {
+    navigate(`/auth/register/step${signUpData.onboardingStep}`);
+  }, [signUpData.onboardingStep, navigate]);
 
   return (
     <Box className={classes.root}>

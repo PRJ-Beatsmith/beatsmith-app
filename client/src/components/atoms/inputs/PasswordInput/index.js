@@ -136,7 +136,7 @@ const PasswordInput = memo(
         hasUpperCase: /[A-Z]/?.test(password),
         hasLowerCase: /[a-z]/?.test(password),
         hasNumbers: /\d/?.test(password),
-        hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/?.test(password),
+        hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
         hasMinLength: password?.length >= 10,
       });
       console.log("value22222", password);
