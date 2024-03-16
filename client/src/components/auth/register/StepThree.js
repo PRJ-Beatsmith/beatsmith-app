@@ -158,7 +158,7 @@ const StepThree = ({ onNext, onOpenModal, onCloseModal }) => {
     >
       {({ isSubmitting, dirty, setFieldValue, isValid, values }) => (
         <>
-          {isSubmitting && <CircularProgress />}
+          {isSubmitting && <CircularProgress style={{ margin: "auto" }} />}
           <Box className={classes.root}>
             <Form>
               <Box className={classes.textBox}>

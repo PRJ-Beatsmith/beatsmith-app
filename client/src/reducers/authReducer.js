@@ -14,6 +14,11 @@ const initialState = {
     privacyPolicy: false,
     onboardingStep: 1,
   },
+  forgotPasswordData: {
+    email: "",
+    newPassword: "",
+    forgotPasswordStep: 1,
+  },
   socket: null,
   isAuthenticated: false,
   user: {},
@@ -63,6 +68,11 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case TYPES.UPDATE_FORGOT_PASSWORD_DATA:
+      return {
+        ...state,
+        forgotPasswordData: { ...state.forgotPasswordData, ...action.payload },
       };
     default:
       return state;

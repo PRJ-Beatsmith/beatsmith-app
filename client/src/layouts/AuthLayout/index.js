@@ -3,9 +3,11 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, CircularProgress } from "@mui/material";
 import { AuthCarousel } from "components/organisms/Carousels";
+import { CustomDotsStepper } from "components/atoms/stepper";
 
 const Login = lazy(() => import("components/auth/login"));
 const Register = lazy(() => import("components/auth/register"));
+const ForgotPassword = lazy(() => import("components/auth/forgotPassword"));
 
 const useStyles = makeStyles({
   root: {
@@ -43,6 +45,17 @@ const useStyles = makeStyles({
     "@media (max-width: 769px)": {
       borderRadius: "12px",
     },
+    position: "relative",
+  },
+  stepper: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    background: "none",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: "20px",
   },
   gradientOverlay: {
     background:
@@ -67,6 +80,11 @@ const useStyles = makeStyles({
 function AuthLayout() {
   const classes = useStyles();
   let location = useLocation();
+  const isRegisterRoute = location.pathname.startsWith("/auth/register/");
+  const isForgotPasswordRoute = location.pathname.startsWith(
+    "/auth/forgot-password/",
+  );
+
   return (
     <Box className={classes.root}>
       <Box className={classes.Container}>
@@ -76,12 +94,27 @@ function AuthLayout() {
           </Box>
         </Box>
         <Box className={classes.right}>
-          <Suspense fallback={<CircularProgress />}>
+          <Suspense fallback={<CircularProgress style={{ margin: "auto" }} />}>
             <Routes location={location} key={location.pathname}>
               <Route path="/login" index element={<Login />} />
               <Route path="/register/*" element={<Register />} />
+              <Route path="/forgot-password/*" element={<ForgotPassword />} />
             </Routes>
           </Suspense>
+          {isRegisterRoute && (
+            <CustomDotsStepper
+              steps={3}
+              activeStep={0}
+              className={classes.stepper}
+            />
+          )}
+          {isForgotPasswordRoute && (
+            <CustomDotsStepper
+              steps={3}
+              activeStep={0}
+              className={classes.stepper}
+            />
+          )}
         </Box>
       </Box>
     </Box>

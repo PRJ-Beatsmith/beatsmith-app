@@ -76,3 +76,35 @@ export const submitLogin = (loginData) => async (dispatch) => {
     }
   });
 };
+
+export const updateForgotPasswordData = (data) => ({
+  type: TYPES.UPDATE_FORGOT_PASSWORD_DATA,
+  payload: data,
+});
+
+export const forgotPassword = (userData) => async (dispatch) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      dispatch({ type: TYPES.FORGOT_PASSWORD_REQUEST });
+
+      const { data } = await userAuth.forgotPassword(userData);
+      dispatch({ type: TYPES.FORGOT_PASSWORD_SUCCESS, payload: data });
+      store.addNotification({
+        ...notificationOptions,
+        title: i18n.t("actions.Success"),
+        message: i18n.t("actions.Forgot password was successful"),
+        type: "success",
+      });
+      resolve(data);
+    } catch (error) {
+      store.addNotification({
+        ...notificationOptions,
+        title: i18n.t("actions.Failure"),
+        message: i18n.t("actions.Failed to reset password"),
+        type: "danger",
+      });
+      dispatch({ type: TYPES.FORGOT_PASSWORD_FAIL, payload: error });
+      reject(error);
+    }
+  });
+};

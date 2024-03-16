@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { CustomDatePicker } from "components/atoms/Picker";
 import CustomInput from "components/atoms/inputs/CustomInput";
 import FormButton from "components/atoms/Buttons/formButton";
 
@@ -154,7 +155,15 @@ const StepOne = ({ onNext }) => {
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, errors, touched, dirty, setFieldValue, isValid }) => (
+      {({
+        isSubmitting,
+        errors,
+        touched,
+        dirty,
+        setFieldValue,
+        isValid,
+        values,
+      }) => (
         <>
           {isSubmitting && <CircularProgress style={{ margin: "auto" }} />}
           <Box className={classes.root}>
@@ -262,9 +271,10 @@ const StepOne = ({ onNext }) => {
                       {t("Auth.Register.Step1.Birthday")}
                     </label>
                     <Field
-                      component={CustomInput}
+                      component={CustomDatePicker}
                       name="birthday"
                       id="birthday"
+                      // value={values.birthday}
                       style={{ width: "200px", height: "50px", flexShrink: 0 }}
                       type="date"
                       onChange={(event) =>

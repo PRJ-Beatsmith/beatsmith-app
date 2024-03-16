@@ -40,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
     left: "50%",
     transform: "translateX(-50%)",
     zIndex: 2,
+    display: "flex",
+    gap: "50px",
   },
   logo: {
     position: "absolute",

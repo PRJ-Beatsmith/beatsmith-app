@@ -121,7 +121,6 @@ const PasswordInput = memo(
       const hasLowerCase = /[a-z].*[a-z]/.test(password);
       const hasNumbers = /\d/.test(password);
       const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-      console.log("password", password);
       return (
         hasUpperCase &&
         hasLowerCase &&
@@ -139,7 +138,6 @@ const PasswordInput = memo(
         hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
         hasMinLength: password?.length >= 10,
       });
-      console.log("value22222", password);
     };
 
     const generatePassword = () => {
@@ -173,8 +171,6 @@ const PasswordInput = memo(
       if (/[a-z]/.test(password)) strength += 25;
       if (/\d/.test(password) || /[!@#$%^&*(),.?":{}|<>]/.test(password))
         strength += 25;
-      console.log("strength1", password);
-      console.log("strength3", strength);
       return strength;
     };
 
@@ -192,19 +188,9 @@ const PasswordInput = memo(
 
     useEffect(() => {
       checkValidations(value);
-
       const strength = getPasswordStrength(value);
-
       onStrengthChange && onStrengthChange(strength);
-
-      console.log("strength", strength);
     }, [value, onStrengthChange]);
-
-    // const handleChange = (event) => {
-    //   // const { value } = event.target;
-    //   onChange(event);
-    //   console.log("value", event);
-    // };
 
     return (
       <>

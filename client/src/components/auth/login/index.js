@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import { submitLogin } from "actions/authActions";
+import * as Yup from "yup";
 import CustomInput from "components/atoms/inputs/CustomInput";
 import PasswordInput from "components/atoms/inputs/PasswordInput";
 import FormButton from "components/atoms/Buttons/formButton";
@@ -118,23 +119,18 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email(t("Auth.Validate.InvalidEmailError"))
+      .required(t("Auth.Validate.EmailRequired")),
+    password: Yup.string().required(t("Auth.Validate.PasswordRequired")),
+  });
+
   return (
     <Formik
       initialValues={{ email: "", password: "", rememberPassword: true }}
       validateOnChange={true}
-      validate={(values) => {
-        const errors = {};
-        if (!values.email) {
-          errors.email = t("Auth.Validate.EmailRequired");
-        } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-        ) {
-          const emailError = errors.email;
-          errors.email = t("Auth.Validate.InvalidEmailError");
-          toast.error(emailError?.data?.message || emailError?.message);
-        }
-        return errors;
-      }}
+      validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
         dispatch(submitLogin(values))
@@ -149,7 +145,7 @@ const Login = () => {
           });
       }}
     >
-      {({ isSubmitting, dirty, setFieldValue }) => (
+      {({ isSubmitting, dirty, setFieldValue, values, isValid }) => (
         <>
           {isSubmitting && <CircularProgress style={{ margin: "auto" }} />}
           <Box className={classes.root}>
@@ -186,15 +182,15 @@ const Login = () => {
                   <label htmlFor="password" className={classes.label}>
                     {t("Auth.Login.Password")}
                   </label>
-                  <Field
-                    component={PasswordInput}
+                  <PasswordInput
                     name="password"
                     id="password"
+                    values={values.password}
+                    placeholder={t("Auth.Login.yourPassword")}
                     autoComplete="current-password"
                     onChange={(event) =>
                       setFieldValue("password", event.target.value)
                     }
-                    placeholder={t("Auth.Login.yourPassword")}
                     showPasswordStartIcon={true}
                     showEyeIcon={true}
                     fullWidth
@@ -209,13 +205,13 @@ const Login = () => {
                         setFieldValue("rememberPassword", event.target.checked)
                       }
                       variant="body2"
-                      defaultChecked={true}
+                      defaultChecked={values.rememberPassword}
                       label={t("Auth.Login.rememberPassword")}
                       autoComplete="remember-account"
                     />
                     <Typography variant="body2" className={classes.text3}>
                       <Link
-                        to="/auth/forgot-password"
+                        to="/auth/forgot-password/step1"
                         className={classes.text3}
                       >
                         {t("Auth.Login.forgotPassword")}
@@ -227,7 +223,7 @@ const Login = () => {
             </Form>
             <Box className={classes.loginOrCreateAcc}>
               <FormButton
-                disabled={!dirty}
+                disabled={isSubmitting || !isValid || !dirty}
                 variant="primary"
                 type="submit"
                 label={t("Auth.Login.signIn")}

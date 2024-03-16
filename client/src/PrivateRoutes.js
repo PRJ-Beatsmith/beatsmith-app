@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "utils/contexts/authContexts";
 
 const PrivateRoutes = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  setIsAuthenticated(false);
 
   return isAuthenticated ? children : <Navigate to="/auth/login" replace />;
 };
