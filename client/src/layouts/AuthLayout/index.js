@@ -1,15 +1,17 @@
 import React, { Suspense, memo, lazy } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, useMediaQuery } from "@mui/material";
 import { AuthCarousel } from "components/organisms/Carousels";
 import { CustomDotsStepper } from "components/atoms/stepper";
+
+import BeatSmithLogo from "assets/img/logo/Logo.png";
 
 const Login = lazy(() => import("components/auth/login"));
 const Register = lazy(() => import("components/auth/register"));
 const ForgotPassword = lazy(() => import("components/auth/forgotPassword"));
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     height: "100%",
@@ -75,11 +77,23 @@ const useStyles = makeStyles({
     margin: "146px 0 0 58px",
     width: "356px",
   },
-});
+  logo: {
+    position: "absolute",
+    top: theme.spacing(6),
+    left: "50%",
+    transform: "translateX(-50%)",
+    zIndex: 2,
+  },
+}));
 
 function AuthLayout() {
   const classes = useStyles();
   let location = useLocation();
+
+  const isMobileView = useMediaQuery((theme) =>
+    theme.breakpoints.down("mobile"),
+  );
+
   const isRegisterRoute = location.pathname.startsWith("/auth/register/");
   const isForgotPasswordRoute = location.pathname.startsWith(
     "/auth/forgot-password/",
@@ -88,6 +102,13 @@ function AuthLayout() {
   return (
     <Box className={classes.root}>
       <Box className={classes.Container}>
+        {isMobileView && (
+          <img
+            src={BeatSmithLogo}
+            alt="BeatSmith Logo"
+            className={classes.logo}
+          />
+        )}
         <Box className={classes.left}>
           <Box className={classes.gradientOverlay}>
             <AuthCarousel />
